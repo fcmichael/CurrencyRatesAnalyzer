@@ -1,13 +1,10 @@
 package app.gui;
 
-import app.gui.panel.MainPanel;
 import app.util.PropertiesReader;
 
 import javax.swing.*;
 
 public class CurrencyRatesAnalyzerFrame extends JFrame {
-
-    JPanel mainPanel;
 
     public CurrencyRatesAnalyzerFrame() {
         prepareFrameSizeAndTitle();
@@ -28,6 +25,6 @@ public class CurrencyRatesAnalyzerFrame extends JFrame {
     }
 
     private void prepareMainPanel(){
-        add(new MainPanel());
+        add(new NavigationPanel());
     }
 }

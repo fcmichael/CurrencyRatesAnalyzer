@@ -3,15 +3,16 @@ package app.gui.panel;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainPanel extends BasicPanel {
+public class DashboardPanel extends BasicContentPanel {
 
-    public MainPanel() {
+    public DashboardPanel() {
         setContentPanel(prepareContentPanel());
     }
 
     private JPanel prepareContentPanel(){
         JPanel contentPanel = new JPanel();
-        contentPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        Label l = new Label("Dashboard Panel");
+        contentPanel.add(l);
         return contentPanel;
     }
 }
