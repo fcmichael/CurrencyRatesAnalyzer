@@ -1,15 +1,21 @@
-package app.gui.panel;
+package app.gui.search;
+
+
+import app.gui.BasicContentPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SearchPanel extends BasicContentPanel {
 
+    private JPanel contentPanel;
+
     public SearchPanel() {
-        setContentPanel(prepareContentPanel());
+        this.contentPanel = setContentPanel();
+        addContentPanel(contentPanel);
     }
 
-    private JPanel prepareContentPanel(){
+    private JPanel setContentPanel(){
         JPanel contentPanel = new JPanel();
         Label l = new Label("Search Panel");
         contentPanel.add(l);

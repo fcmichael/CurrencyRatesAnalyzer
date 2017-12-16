@@ -1,15 +1,21 @@
-package app.gui.panel;
+package app.gui.dashboard;
+
+
+import app.gui.BasicContentPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class DashboardPanel extends BasicContentPanel {
 
+    private JPanel contentPanel;
+
     public DashboardPanel() {
-        setContentPanel(prepareContentPanel());
+        this.contentPanel = setContentPanel();
+        addContentPanel(contentPanel);
     }
 
-    private JPanel prepareContentPanel(){
+    private JPanel setContentPanel(){
         JPanel contentPanel = new JPanel();
         Label l = new Label("Dashboard Panel");
         contentPanel.add(l);

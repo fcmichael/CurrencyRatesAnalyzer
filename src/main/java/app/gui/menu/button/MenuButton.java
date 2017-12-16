@@ -1,16 +1,13 @@
 package app.gui.menu.button;
 
+import app.gui.menu.action.BookmarkChange;
+
 import javax.swing.*;
-import java.awt.*;
 
 public class MenuButton extends JButton {
 
     public MenuButton(String text, JPanel cardPanel) {
         super(text);
-        addActionListener(e -> {
-            CardLayout cl = (CardLayout)(cardPanel.getLayout());
-            String changeToPanel = this.getText();
-            cl.show(cardPanel, changeToPanel);
-        });
+        this.addActionListener(new BookmarkChange(text, cardPanel));
     }
 }
