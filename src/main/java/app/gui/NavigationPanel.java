@@ -1,6 +1,6 @@
 package app.gui;
 
-import app.gui.menu.button.MenuButton;
+import app.gui.menu.MenuButton;
 import app.gui.dashboard.DashboardPanel;
 import app.gui.favourite.FavouritePanel;
 import app.gui.search.SearchPanel;

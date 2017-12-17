@@ -21,6 +21,7 @@
     </build>
 
     <dependencies>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -36,6 +37,13 @@
             <artifactId>h2</artifactId>
             <version>1.4.196</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -1,6 +1,4 @@
-package app.gui.menu.button;
-
-import app.gui.menu.action.BookmarkChange;
+package app.gui.menu;
 
 import javax.swing.*;
 

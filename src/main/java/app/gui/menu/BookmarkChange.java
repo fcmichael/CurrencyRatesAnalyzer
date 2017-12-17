@@ -1,4 +1,4 @@
-package app.gui.menu.action;
+package app.gui.menu;
 
 import org.apache.log4j.Logger;
 
@@ -11,7 +11,7 @@ public class BookmarkChange extends AbstractAction{
     private JPanel cardPanel;
     private String bookMarkName;
 
-    public BookmarkChange(String bookMarkName, JPanel cardPanel){
+    BookmarkChange(String bookMarkName, JPanel cardPanel){
         super();
         this.bookMarkName = bookMarkName;
         this.cardPanel = cardPanel;
