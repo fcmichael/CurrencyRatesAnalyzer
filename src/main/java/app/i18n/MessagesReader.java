@@ -15,6 +15,7 @@ public class MessagesReader {
 
     private static MessagesReader instance = new MessagesReader();
     private Map<ApplicationLanguage, Properties> languagePropertiesMap;
+    private ApplicationLanguage currentLanguage = ApplicationLanguage.PL;
 
     public static MessagesReader getInstance() {
         return instance;
@@ -53,15 +54,7 @@ public class MessagesReader {
         return map;
     }
 
-    public String getMessage(String locale, String key) {
-        Properties properties = languagePropertiesMap.get(ApplicationLanguage.EN);
-
-        try {
-            properties = languagePropertiesMap.get(ApplicationLanguage.valueOf(locale));
-        } catch (IllegalArgumentException e) {
-            Logger.getRootLogger().warn("No ApplicationLanguage called: " + locale, e);
-        }
-
-        return properties.getProperty(key);
+    public String getMessage(String key) {
+        return languagePropertiesMap.get(currentLanguage).getProperty(key);
     }
 }
