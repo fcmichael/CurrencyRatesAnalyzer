@@ -15,7 +15,7 @@ public class MessagesReader {
 
     private static MessagesReader instance = new MessagesReader();
     private Map<ApplicationLanguage, Properties> languagePropertiesMap;
-    private ApplicationLanguage currentLanguage = ApplicationLanguage.PL;
+    private ApplicationLanguage currentLanguage = ApplicationLanguage.EN;
 
     public static MessagesReader getInstance() {
         return instance;

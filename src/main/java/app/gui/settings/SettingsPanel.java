@@ -1,46 +1,46 @@
 package app.gui.settings;
 
-
 import app.gui.BasicContentPanel;
 import app.gui.settings.language.LanguageComboBox;
-import app.gui.settings.language.LanguageItemRenderer;
+import app.gui.settings.plaf.PlafSelectPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 public class SettingsPanel extends BasicContentPanel {
 
-    private final JPanel contentPanel;
-    private final JPanel languageSelectPanel;
+    private JPanel contentPanel;
+    private JPanel languageSelectPanel;
+    private JPanel patternSelectPanel;
 
     public SettingsPanel() {
-        contentPanel = new JPanel(new GridLayout(4,1));
-        languageSelectPanel = new JPanel(new GridLayout());
-
-        JLabel jLabel = new JLabel("Language");
-        jLabel.setPreferredSize(new Dimension(200,200));
-        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JButton save = new JButton("Save");
-        save.setPreferredSize(new Dimension(50,50));
-        save.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JComboBox jComboBox = createLanguageSelectBox();
-        jComboBox.setPreferredSize(new Dimension(200,200));
-
-        languageSelectPanel.add(jLabel);
-        languageSelectPanel.add(jComboBox);
-        languageSelectPanel.add(save);
+        this.contentPanel = setContentPanel();
+        this.languageSelectPanel = setLanguageSelectPanel();
+        this.patternSelectPanel = new PlafSelectPanel();
 
         contentPanel.add(languageSelectPanel);
+        contentPanel.add(patternSelectPanel);
         addContentPanel(contentPanel);
     }
 
-    private JComboBox createLanguageSelectBox() {
-        LanguageComboBox languageComboBox = new LanguageComboBox();
-        languageComboBox.setPreferredSize(new Dimension(120, 30));
+    private JPanel setContentPanel(){
+        return new JPanel(new GridLayout(8,1));
+    }
 
-        return languageComboBox;
+    private JPanel setLanguageSelectPanel(){
+        JPanel languageSelectPanel = new JPanel();
+        languageSelectPanel.setLayout(new BoxLayout(languageSelectPanel, BoxLayout.LINE_AXIS));
+
+        JLabel jLabel = new JLabel("Language");
+        jLabel.setMaximumSize(new Dimension(250,400));
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JComboBox jComboBox = new LanguageComboBox();
+        jComboBox.setMaximumSize(new Dimension(200,40));
+
+        languageSelectPanel.add(jLabel);
+        languageSelectPanel.add(Box.createRigidArea(new Dimension(228,0)));
+        languageSelectPanel.add(jComboBox);
+        return languageSelectPanel;
     }
 }

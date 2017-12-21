@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 
 public class CurrencyRatesAnalyzer {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Logger.getRootLogger().info("Application start");
         new CurrencyRatesAnalyzerFrame();
         Logger.getRootLogger().info("Application end");
