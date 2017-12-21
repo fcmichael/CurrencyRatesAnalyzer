@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class BookmarkChange extends AbstractAction{
+class BookmarkChange extends AbstractAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {

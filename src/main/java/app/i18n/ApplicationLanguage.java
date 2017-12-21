@@ -7,10 +7,10 @@ public enum ApplicationLanguage {
     PL("Polski", "pl", "/messages/messages_pl.xml", "/images/language/pl.png"),
     EN("English", "en", "/messages/messages_en.xml", "/images/language/en.png");
 
-    private String name;
-    private String shortcut;
-    private String messagesPath;
-    private String imagePath;
+    private final String name;
+    private final String shortcut;
+    private final String messagesPath;
+    private final String imagePath;
 
     ApplicationLanguage(String name, String shortcut, String messagesPath, String imagePath) {
         this.name = name;

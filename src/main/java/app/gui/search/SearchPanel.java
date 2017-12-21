@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class SearchPanel extends BasicContentPanel {
 
-    private JPanel contentPanel;
+    private final JPanel contentPanel;
 
     public SearchPanel() {
         this.contentPanel = setContentPanel();

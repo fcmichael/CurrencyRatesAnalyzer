@@ -6,9 +6,9 @@ import app.i18n.ApplicationLanguage;
 import javax.swing.*;
 import java.awt.*;
 
-public class LanguageItemRenderer extends JPanel implements ListCellRenderer<ApplicationLanguage> {
+class LanguageItemRenderer extends JPanel implements ListCellRenderer<ApplicationLanguage> {
 
-    private JLabel languageLabel = new JLabel();
+    private final JLabel languageLabel = new JLabel();
 
     LanguageItemRenderer() {
         setLayout(new GridBagLayout());

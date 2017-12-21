@@ -9,7 +9,7 @@ import java.util.Observer;
 
 public class LanguageSelectPanel extends JPanel implements Observer {
 
-	private JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage("SettingsLanguage"));
+	private final JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage("SettingsLanguage"));
 
 	public LanguageSelectPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));

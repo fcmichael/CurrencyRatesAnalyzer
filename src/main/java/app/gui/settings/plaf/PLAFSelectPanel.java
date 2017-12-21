@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class PLAFSelectPanel extends JPanel implements Observer {
 
-	private JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage("SettingsPattern"));
+	private final JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage("SettingsPattern"));
 
 	private final Map<String, LookAndFeel> LOOK_AND_FEEL_LIST = new TreeMap<String, LookAndFeel>() {{
 		put("Metal", new MetalLookAndFeel());

@@ -5,8 +5,8 @@ import javax.persistence.Persistence;
 
 public class DbFacade {
 
-    private static DbFacade instance = new DbFacade();
-    private EntityManagerFactory entityManagerFactory;
+    private static final DbFacade instance = new DbFacade();
+    private final EntityManagerFactory entityManagerFactory;
     private final String CurrencyRatesAnalyzerPersistenceUnit = "CRA";
 
     private DbFacade() {

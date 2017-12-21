@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class FavouritePanel extends BasicContentPanel {
 
-    private JPanel contentPanel;
+    private final JPanel contentPanel;
 
     public FavouritePanel() {
         this.contentPanel = setContentPanel();

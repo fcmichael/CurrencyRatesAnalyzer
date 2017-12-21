@@ -10,8 +10,8 @@ import java.util.Observer;
 @Getter
 public class MenuButton extends JButton implements Observer{
 
-    private String cardName;
-    private JPanel cardPanel;
+    private final String cardName;
+    private final JPanel cardPanel;
 
     public MenuButton(String text, String cardName, JPanel cardPanel) {
         super(text);

@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class LanguageChangeAction extends AbstractAction {
+class LanguageChangeAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

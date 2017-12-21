@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class DashboardPanel extends BasicContentPanel {
 
-    private JPanel contentPanel;
+    private final JPanel contentPanel;
 
     public DashboardPanel() {
         this.contentPanel = setContentPanel();

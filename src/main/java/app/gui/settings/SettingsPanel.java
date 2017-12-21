@@ -9,9 +9,9 @@ import java.awt.*;
 
 public class SettingsPanel extends BasicContentPanel {
 
-	private JPanel contentPanel;
-	private JPanel languageSelectPanel;
-	private JPanel patternSelectPanel;
+	private final JPanel contentPanel;
+	private final JPanel languageSelectPanel;
+	private final JPanel patternSelectPanel;
 
 	public SettingsPanel() {
 		this.contentPanel = new JPanel(new GridLayout(8, 1));

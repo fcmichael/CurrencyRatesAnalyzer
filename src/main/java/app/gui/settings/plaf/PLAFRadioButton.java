@@ -8,7 +8,7 @@ import java.awt.*;
 @Getter
 class PLAFRadioButton extends JRadioButton {
 
-	private LookAndFeel lookAndFeel;
+	private final LookAndFeel lookAndFeel;
 
 	PLAFRadioButton(String text, LookAndFeel lookAndFeel, Dimension maximumSize) {
 		super(text);

@@ -14,8 +14,8 @@ import java.util.Properties;
 
 public class MessagesReader extends Observable {
 
-    private static MessagesReader instance = new MessagesReader();
-    private Map<ApplicationLanguage, Properties> languagePropertiesMap;
+    private static final MessagesReader instance = new MessagesReader();
+    private final Map<ApplicationLanguage, Properties> languagePropertiesMap;
     private ApplicationLanguage currentLanguage = ApplicationLanguage.PL;
 
     public static MessagesReader getInstance() {

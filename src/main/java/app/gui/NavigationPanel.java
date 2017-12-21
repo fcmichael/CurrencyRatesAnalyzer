@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 class NavigationPanel extends JPanel{
 
-    private JPanel menuPanel;
-    private JPanel contentPanel;
+    private final JPanel menuPanel;
+    private final JPanel contentPanel;
     private final List<String> PANEL_NAMES_IN_CARD_LAYOUT = Arrays.asList("Dashboard", "Favourite", "Search", "Settings");
     private List<MenuButton> menuButtonList;
 
