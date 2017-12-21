@@ -3,6 +3,10 @@
 <properties>
     <comment>messages en</comment>
     <entry key="CurrencyRatesAnalyzerFrameName">Currency rates analyzer</entry>
-    <entry key="LanguagePL">Polish</entry>
-    <entry key="LanguageEN">English</entry>
+    <entry key="Dashboard">Dashboard</entry>
+    <entry key="Favourite">Favourite</entry>
+    <entry key="Search">Search</entry>
+    <entry key="Settings">Settings</entry>
+    <entry key="SettingsLanguage">Language</entry>
+    <entry key="SettingsPattern">Pattern</entry>
 </properties>

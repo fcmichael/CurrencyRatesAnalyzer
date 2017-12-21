@@ -3,6 +3,10 @@
 <properties>
     <comment>messages pl</comment>
     <entry key="CurrencyRatesAnalyzerFrameName">Analizator kursów walut</entry>
-    <entry key="LanguagePL">Polski</entry>
-    <entry key="LanguageEN">Angielski</entry>
+    <entry key="Dashboard">Główna</entry>
+    <entry key="Favourite">Ulubione</entry>
+    <entry key="Search">Wyszukaj</entry>
+    <entry key="Settings">Ustawienia</entry>
+    <entry key="SettingsLanguage">Język</entry>
+    <entry key="SettingsPattern">Skórka</entry>
 </properties>

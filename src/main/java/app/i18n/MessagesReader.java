@@ -9,13 +9,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 import java.util.Properties;
 
-public class MessagesReader {
+public class MessagesReader extends Observable {
 
     private static MessagesReader instance = new MessagesReader();
     private Map<ApplicationLanguage, Properties> languagePropertiesMap;
-    private ApplicationLanguage currentLanguage = ApplicationLanguage.EN;
+    private ApplicationLanguage currentLanguage = ApplicationLanguage.PL;
 
     public static MessagesReader getInstance() {
         return instance;
@@ -56,5 +57,11 @@ public class MessagesReader {
 
     public String getMessage(String key) {
         return languagePropertiesMap.get(currentLanguage).getProperty(key);
+    }
+
+    public void changeLanguage(ApplicationLanguage applicationLanguage){
+        this.currentLanguage = applicationLanguage;
+        setChanged();
+        notifyObservers();
     }
 }

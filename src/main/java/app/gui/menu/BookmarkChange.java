@@ -8,20 +8,15 @@ import java.awt.event.ActionEvent;
 
 public class BookmarkChange extends AbstractAction{
 
-    private JPanel cardPanel;
-    private String bookMarkName;
-
-    BookmarkChange(String bookMarkName, JPanel cardPanel){
-        super();
-        this.bookMarkName = bookMarkName;
-        this.cardPanel = cardPanel;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        Logger.getRootLogger().info("Bookmark event - change to: " + this.bookMarkName);
-        CardLayout cl = (CardLayout)(cardPanel.getLayout());
-        String changeToPanel = this.bookMarkName;
-        cl.show(cardPanel, changeToPanel);
+        MenuButton menuButton = (MenuButton) e.getSource();
+        JPanel cardPanel = menuButton.getCardPanel();
+        CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
+        String changeToPanel = menuButton.getCardName();
+
+        Logger.getRootLogger().info("Bookmark event - change to: " + changeToPanel);
+
+        cardLayout.show(cardPanel, changeToPanel);
     }
 }

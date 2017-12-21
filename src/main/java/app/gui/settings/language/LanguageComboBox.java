@@ -3,15 +3,19 @@ package app.gui.settings.language;
 import app.i18n.ApplicationLanguage;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
 
-public class LanguageComboBox extends JComboBox<ApplicationLanguage> {
+class LanguageComboBox extends JComboBox<ApplicationLanguage> {
 
     private DefaultComboBoxModel<ApplicationLanguage> model;
 
-    public LanguageComboBox() {
+    LanguageComboBox() {
         model = new DefaultComboBoxModel<>();
         addItemsToModel();
         setModel(model);
+        setMaximumSize(new Dimension(200, 40));
+        addActionListener(new LanguageChangeAction());
         setRenderer(new LanguageItemRenderer());
     }
 

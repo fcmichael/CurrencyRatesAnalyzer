@@ -1,11 +1,28 @@
 package app.gui.menu;
 
+import app.i18n.MessagesReader;
+import lombok.Getter;
+
 import javax.swing.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MenuButton extends JButton {
+@Getter
+public class MenuButton extends JButton implements Observer{
 
-    public MenuButton(String text, JPanel cardPanel) {
+    private String cardName;
+    private JPanel cardPanel;
+
+    public MenuButton(String text, String cardName, JPanel cardPanel) {
         super(text);
-        this.addActionListener(new BookmarkChange(text, cardPanel));
+        this.cardName = cardName;
+        this.cardPanel = cardPanel;
+        this.addActionListener(new BookmarkChange());
+        MessagesReader.getInstance().addObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        setText(MessagesReader.getInstance().getMessage(this.cardName));
     }
 }

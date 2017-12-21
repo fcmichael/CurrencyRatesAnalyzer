@@ -5,17 +5,20 @@ import app.gui.dashboard.DashboardPanel;
 import app.gui.favourite.FavouritePanel;
 import app.gui.search.SearchPanel;
 import app.gui.settings.SettingsPanel;
+import app.i18n.MessagesReader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
-class NavigationPanel extends JPanel {
+class NavigationPanel extends JPanel{
 
     private JPanel menuPanel;
     private JPanel contentPanel;
     private final List<String> PANEL_NAMES_IN_CARD_LAYOUT = Arrays.asList("Dashboard", "Favourite", "Search", "Settings");
+    private List<MenuButton> menuButtonList;
 
     NavigationPanel() {
         super(new BorderLayout());
@@ -29,7 +32,10 @@ class NavigationPanel extends JPanel {
     private JPanel setMenuPanel(){
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new GridLayout(0,PANEL_NAMES_IN_CARD_LAYOUT.size()));
-        PANEL_NAMES_IN_CARD_LAYOUT.forEach(name -> menuPanel.add(new MenuButton(name, this.contentPanel)));
+        this.menuButtonList = PANEL_NAMES_IN_CARD_LAYOUT.stream()
+                .map(name -> new MenuButton(MessagesReader.getInstance().getMessage(name), name, this.contentPanel))
+                .collect(Collectors.toList());
+        this.menuButtonList.forEach(menuPanel::add);
         return menuPanel;
     }
 
