@@ -3,10 +3,11 @@ package app.gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class BasicContentPanel extends JPanel{
+public abstract class BasicContentPanel extends JPanel implements DataUpdater{
 
-    protected BasicContentPanel(){
+    protected BasicContentPanel(String name){
         super(new BorderLayout());
+        setName(name);
     }
 
     protected void addContentPanel(JPanel contentPanel){

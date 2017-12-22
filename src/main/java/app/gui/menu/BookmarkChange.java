@@ -1,5 +1,6 @@
 package app.gui.menu;
 
+import app.gui.BasicContentPanel;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -12,11 +13,13 @@ class BookmarkChange extends AbstractAction{
     public void actionPerformed(ActionEvent e) {
         MenuButton menuButton = (MenuButton) e.getSource();
         JPanel cardPanel = menuButton.getCardPanel();
+        BasicContentPanel contentPanel = menuButton.getContentPanel();
         CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
-        String changeToPanel = menuButton.getCardName();
+        String changeToPanel = contentPanel.getName();
 
         Logger.getRootLogger().info("Bookmark event - change to: " + changeToPanel);
 
         cardLayout.show(cardPanel, changeToPanel);
+        contentPanel.updateData();
     }
 }

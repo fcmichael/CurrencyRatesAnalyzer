@@ -4,6 +4,10 @@
     <comment>messages en</comment>
     <entry key="CurrencyRatesAnalyzerFrameName">Currency rates analyzer</entry>
     <entry key="Dashboard">Dashboard</entry>
+    <entry key="DashboardTableHeader">Current currency rates in National Bank of Poland</entry>
+    <entry key="DashboardTableCurrencyCode">Currency code</entry>
+    <entry key="DashboardTableCurrencyValue">Exchange rate</entry>
+    <entry key="DashboardTableCurrencyChange">Exchange rate change</entry>
     <entry key="Favourite">Favourite</entry>
     <entry key="Search">Search</entry>
     <entry key="Settings">Settings</entry>

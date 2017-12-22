@@ -14,6 +14,7 @@ public class SettingsPanel extends BasicContentPanel {
 	private final JPanel patternSelectPanel;
 
 	public SettingsPanel() {
+		super("Settings");
 		this.contentPanel = new JPanel(new GridLayout(8, 1));
 		this.languageSelectPanel = new LanguageSelectPanel();
 		this.patternSelectPanel = new PLAFSelectPanel();
@@ -21,5 +22,10 @@ public class SettingsPanel extends BasicContentPanel {
 		contentPanel.add(languageSelectPanel);
 		contentPanel.add(patternSelectPanel);
 		addContentPanel(contentPanel);
+	}
+
+	@Override
+	public void updateData() {
+
 	}
 }

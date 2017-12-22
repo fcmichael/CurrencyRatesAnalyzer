@@ -1,5 +1,6 @@
 package app.gui.menu;
 
+import app.gui.BasicContentPanel;
 import app.i18n.MessagesReader;
 import lombok.Getter;
 
@@ -10,19 +11,19 @@ import java.util.Observer;
 @Getter
 public class MenuButton extends JButton implements Observer{
 
-    private final String cardName;
     private final JPanel cardPanel;
+    private final BasicContentPanel contentPanel;
 
-    public MenuButton(String text, String cardName, JPanel cardPanel) {
+    public MenuButton(String text, JPanel cardPanel, BasicContentPanel contentPanel) {
         super(text);
-        this.cardName = cardName;
         this.cardPanel = cardPanel;
+        this.contentPanel = contentPanel;
         this.addActionListener(new BookmarkChange());
         MessagesReader.getInstance().addObserver(this);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        setText(MessagesReader.getInstance().getMessage(this.cardName));
+        setText(MessagesReader.getInstance().getMessage(contentPanel.getName()));
     }
 }

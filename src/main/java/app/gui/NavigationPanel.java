@@ -1,50 +1,53 @@
 package app.gui;
 
-import app.gui.menu.MenuButton;
 import app.gui.dashboard.DashboardPanel;
 import app.gui.favourite.FavouritePanel;
+import app.gui.menu.MenuButton;
 import app.gui.search.SearchPanel;
 import app.gui.settings.SettingsPanel;
 import app.i18n.MessagesReader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-class NavigationPanel extends JPanel{
+class NavigationPanel extends JPanel {
 
-    private final JPanel menuPanel;
-    private final JPanel contentPanel;
-    private final List<String> PANEL_NAMES_IN_CARD_LAYOUT = Arrays.asList("Dashboard", "Favourite", "Search", "Settings");
-    private List<MenuButton> menuButtonList;
+	private final JPanel menuPanel;
+	private final JPanel cardPanel;
+	private List<MenuButton> menuButtonList;
+	private final Map<String, BasicContentPanel> PANELS = new LinkedHashMap<String, BasicContentPanel>() {{
+		put("Dashboard", new DashboardPanel());
+		put("Favourite", new FavouritePanel());
+		put("Search", new SearchPanel());
+		put("Settings", new SettingsPanel());
+	}};
 
-    NavigationPanel() {
-        super(new BorderLayout());
-        this.contentPanel = setContentPanel();
-        this.menuPanel = setMenuPanel();
+	NavigationPanel() {
+		super(new BorderLayout());
+		this.cardPanel = setCardPanel();
+		this.menuPanel = setMenuPanel();
 
-        add(contentPanel, BorderLayout.CENTER);
-        add(menuPanel, BorderLayout.PAGE_START);
-    }
+		add(cardPanel, BorderLayout.CENTER);
+		add(menuPanel, BorderLayout.PAGE_START);
+	}
 
-    private JPanel setMenuPanel(){
-        JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(0,PANEL_NAMES_IN_CARD_LAYOUT.size()));
-        this.menuButtonList = PANEL_NAMES_IN_CARD_LAYOUT.stream()
-                .map(name -> new MenuButton(MessagesReader.getInstance().getMessage(name), name, this.contentPanel))
-                .collect(Collectors.toList());
-        this.menuButtonList.forEach(menuPanel::add);
-        return menuPanel;
-    }
+	private JPanel setMenuPanel() {
+		JPanel menuPanel = new JPanel();
+		menuPanel.setLayout(new GridLayout(0, PANELS.size()));
+		this.menuButtonList = PANELS.entrySet().stream()
+				.map(entry -> new MenuButton(MessagesReader.getInstance().getMessage(entry.getKey()), this.cardPanel, entry.getValue()))
+				.collect(Collectors.toList());
+		this.menuButtonList.forEach(menuPanel::add);
+		return menuPanel;
+	}
 
-    private JPanel setContentPanel(){
-        JPanel contentPanel = new JPanel(new CardLayout());
-        contentPanel.add(new DashboardPanel(), PANEL_NAMES_IN_CARD_LAYOUT.get(0));
-        contentPanel.add(new FavouritePanel(), PANEL_NAMES_IN_CARD_LAYOUT.get(1));
-        contentPanel.add(new SearchPanel(), PANEL_NAMES_IN_CARD_LAYOUT.get(2));
-        contentPanel.add(new SettingsPanel(), PANEL_NAMES_IN_CARD_LAYOUT.get(3));
-        return contentPanel;
-    }
+	private JPanel setCardPanel() {
+		JPanel cardPanel = new JPanel(new CardLayout());
+		PANELS.forEach((s, basicContentPanel) -> cardPanel.add(basicContentPanel, s));
+		return cardPanel;
+	}
 }
