@@ -57,6 +57,10 @@ public class MessagesReader extends Observable {
         return map;
     }
 
+    public ApplicationLanguage getCurrentLanguage() {
+        return currentLanguage;
+    }
+
     public String getMessage(String key) {
         return languagePropertiesMap.get(currentLanguage).getProperty(key);
     }

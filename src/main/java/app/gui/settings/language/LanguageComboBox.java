@@ -1,9 +1,12 @@
 package app.gui.settings.language;
 
 import app.i18n.ApplicationLanguage;
+import app.i18n.MessagesReader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 class LanguageComboBox extends JComboBox<ApplicationLanguage> {
 
@@ -19,8 +22,13 @@ class LanguageComboBox extends JComboBox<ApplicationLanguage> {
     }
 
     private void addItemsToModel() {
-        for (ApplicationLanguage language : ApplicationLanguage.values()) {
-            model.addElement(language);
-        }
+        List<ApplicationLanguage> applicationLanguages = Arrays.asList(ApplicationLanguage.values());
+        ApplicationLanguage currentLanguage = MessagesReader.getInstance().getCurrentLanguage();
+        model.addElement(currentLanguage);
+
+        applicationLanguages
+                .stream()
+                .filter(l -> !(l.getShortcut().equalsIgnoreCase(currentLanguage.getShortcut())))
+                .forEach(model::addElement);
     }
 }
