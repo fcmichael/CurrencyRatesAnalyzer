@@ -1,90 +1,100 @@
 package app.gui.dashboard;
 
+import app.i18n.MessagesReader;
 import app.nbp.analyse.CurrentRatesProvider;
 import app.nbp.model.Rate;
-import lombok.Getter;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.util.List;
+import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
-@Getter
-class DashboardTable extends JTable {
+class DashboardTable extends JTable implements Observer {
 
-	private DashboardTableModel dashboardTableModel;
+    private DashboardTableModel dashboardTableModel;
 
-	DashboardTable() {
-		super();
-		this.dashboardTableModel = new DashboardTableModel();
-		setModel(dashboardTableModel);
-		setFillsViewportHeight(true);
-		setAutoCreateRowSorter(true);
-		getTableHeader().setReorderingAllowed(false);
-		setRowHeight(22);
-		DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer();
-		defaultTableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		for (int i = 0; i < dashboardTableModel.getColumnCount(); i++) {
-			getColumnModel().getColumn(i).setCellRenderer(defaultTableCellRenderer);
-		}
+    DashboardTable() {
+        super();
+        setTableModel();
+        configureTable();
+        setTableCellHorizontalAlignment();
 
-	}
+        MessagesReader.getInstance().addObserver(this);
+    }
 
-	@Override
-	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-		Component component = super.prepareRenderer(renderer, row, column);
-		Object value = dashboardTableModel.getValueAt(convertRowIndexToModel(row), column);
+    private void configureTable() {
+        setModel(dashboardTableModel);
+        setFillsViewportHeight(true);
+        setAutoCreateRowSorter(true);
+        getTableHeader().setReorderingAllowed(false);
+        setRowHeight(22);
+        setAutoCreateColumnsFromModel(false);
+    }
 
-		if (column == 2) {
-			double val = (double) value;
-			if (val > 0) {
-				component.setBackground(Color.green);
-			} else if (val < 0) {
-				component.setBackground(Color.red);
-			} else {
-				component.setBackground(Color.white);
-			}
-		} else {
-			component.setBackground(Color.white);
-		}
+    private void setTableModel() {
+        this.dashboardTableModel = new DashboardTableModel();
+    }
 
-		return component;
-	}
+    private void setTableCellHorizontalAlignment() {
+        DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer();
+        defaultTableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < dashboardTableModel.getColumnCount(); i++) {
+            getColumnModel().getColumn(i).setCellRenderer(defaultTableCellRenderer);
+        }
+    }
 
-	void updateModel() {
-		SwingWorker swingWorker = new SwingWorker() {
-			@Override
-			protected Object doInBackground() throws Exception {
-				System.out.println("DOING IN BACKGROUND");
-				List<Rate> rateList = null;
-				try {
-					rateList = CurrentRatesProvider.getActualRates();
-					System.out.println("OK");
-				} catch (Exception e) {
-					System.out.println("ERROR");
-					e.printStackTrace();
-				}
-				return rateList;
-			}
+    @Override
+    public void update(java.util.Observable o, Object arg) {
+        getColumnModel().getColumn(0).setHeaderValue(MessagesReader.getInstance().getMessage("DashboardTableCurrencyCode"));
+        getColumnModel().getColumn(1).setHeaderValue(MessagesReader.getInstance().getMessage("DashboardTableCurrencyValue"));
+        getColumnModel().getColumn(2).setHeaderValue(MessagesReader.getInstance().getMessage("DashboardTableCurrencyChange"));
+    }
 
-			@Override
-			protected void done() {
-				try {
-					List<Rate> rateList = (List<Rate>) get();
-					if(rateList != null){
-						dashboardTableModel.setRateList(rateList);
-						dashboardTableModel.fireTableDataChanged();
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				}
-			}
-		};
+    @Override
+    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+        Component component = super.prepareRenderer(renderer, row, column);
+        Object value = dashboardTableModel.getValueAt(convertRowIndexToModel(row), column);
 
-		swingWorker.execute();
-	}
+        if (column == 2) { // rate change
+            double val = (double) value;
+            if (val > 0) {
+                component.setBackground(Color.green);
+            } else if (val < 0) {
+                component.setBackground(Color.red);
+            } else {
+                component.setBackground(Color.white);
+            }
+        } else {
+            component.setBackground(Color.white);
+        }
+
+        return component;
+    }
+
+    void updateModel() {
+        SwingWorker swingWorker = new SwingWorker<List<Rate>, Object>() {
+
+            @Override
+            protected List<Rate> doInBackground() {
+                return CurrentRatesProvider.getActualRates();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    List<Rate> rateList = get();
+                    dashboardTableModel.setRateList(rateList);
+                    dashboardTableModel.fireTableDataChanged();
+                } catch (InterruptedException | ExecutionException e) {
+                    Logger.getRootLogger().warn("Exception while dashboard data loading", e);
+                }
+            }
+        };
+
+        swingWorker.execute();
+    }
 }

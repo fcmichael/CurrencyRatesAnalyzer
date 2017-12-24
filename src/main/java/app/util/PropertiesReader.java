@@ -29,7 +29,7 @@ public class PropertiesReader {
 			} catch (FileNotFoundException e) {
 				Logger.getRootLogger().warn("Properties file not found", e);
 			} catch (IOException e) {
-				Logger.getRootLogger().warn("Error while properties file proceeding", e);
+				Logger.getRootLogger().warn("Exception while properties file proceeding", e);
 			}
 		} else {
 			Logger.getRootLogger().warn("Cannot get resource URL");

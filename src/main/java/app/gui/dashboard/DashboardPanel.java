@@ -9,34 +9,46 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DashboardPanel extends BasicContentPanel implements Observer{
+public class DashboardPanel extends BasicContentPanel implements Observer {
 
-	private final JPanel contentPanel;
-	private DashboardTable table;
-	private String messageKey = "DashboardTableHeader";
-	private JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage(messageKey));
+    private DashboardTable table;
+    private JLabel tableLabel;
+    private final String tableLabelMessageKey = "DashboardTableHeader";
 
-	public DashboardPanel() {
-		super("Dashboard");
-		this.contentPanel = new JPanel(new BorderLayout());
-		this.table = new DashboardTable();
+    public DashboardPanel() {
+        super("Dashboard");
+        setTableLabel();
+        setTable();
+        setContentPanel();
 
-		jLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		jLabel.setPreferredSize(new Dimension(100, 50));
-		contentPanel.add(jLabel, BorderLayout.NORTH);
-		contentPanel.add(new JScrollPane(table), BorderLayout.CENTER);
-		MessagesReader.getInstance().addObserver(this);
-		updateData();
-		addContentPanel(contentPanel);
-	}
+        MessagesReader.getInstance().addObserver(this);
+    }
 
-	@Override
-	public void updateData() {
-		table.updateModel();
-	}
+    private void setTableLabel() {
+        this.tableLabel = new JLabel(MessagesReader.getInstance().getMessage(tableLabelMessageKey));
+        this.tableLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.tableLabel.setPreferredSize(new Dimension(100, 50));
+    }
 
-	@Override
-	public void update(Observable o, Object arg) {
-		jLabel.setText(MessagesReader.getInstance().getMessage(messageKey));
-	}
+    private void setTable() {
+        this.table = new DashboardTable();
+        updateData();
+    }
+
+    private void setContentPanel() {
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.add(tableLabel, BorderLayout.NORTH);
+        contentPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+        addContentPanel(contentPanel);
+    }
+
+    @Override
+    public void updateData() {
+        table.updateModel();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        tableLabel.setText(MessagesReader.getInstance().getMessage(tableLabelMessageKey));
+    }
 }

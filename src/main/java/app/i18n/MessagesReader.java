@@ -44,7 +44,7 @@ public class MessagesReader extends Observable {
                 } catch (FileNotFoundException e) {
                     Logger.getRootLogger().warn("Message file not found", e);
                 } catch (IOException e) {
-                    Logger.getRootLogger().warn("Error while message file proceeding", e);
+                    Logger.getRootLogger().warn("Exception while message file proceeding", e);
                 }
             } else {
                 Logger.getRootLogger().warn("Cannot get resource URL");
