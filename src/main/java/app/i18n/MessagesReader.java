@@ -1,5 +1,6 @@
 package app.i18n;
 
+import app.util.PropertiesReader;
 import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
@@ -16,14 +17,15 @@ public class MessagesReader extends Observable {
 
     private static final MessagesReader instance = new MessagesReader();
     private final Map<ApplicationLanguage, Properties> languagePropertiesMap;
-    private ApplicationLanguage currentLanguage = ApplicationLanguage.PL;
+    private ApplicationLanguage currentLanguage;
+
+    private MessagesReader() {
+        this.currentLanguage = ApplicationLanguage.valueOf(PropertiesReader.getProperty("application.default.language", "PL"));
+        this.languagePropertiesMap = initializePropertiesFromXML();
+    }
 
     public static MessagesReader getInstance() {
         return instance;
-    }
-
-    private MessagesReader() {
-        this.languagePropertiesMap = initializePropertiesFromXML();
     }
 
     private Map<ApplicationLanguage, Properties> initializePropertiesFromXML() {
@@ -59,7 +61,7 @@ public class MessagesReader extends Observable {
         return languagePropertiesMap.get(currentLanguage).getProperty(key);
     }
 
-    public void changeLanguage(ApplicationLanguage applicationLanguage){
+    public void changeLanguage(ApplicationLanguage applicationLanguage) {
         this.currentLanguage = applicationLanguage;
         setChanged();
         notifyObservers();
