@@ -11,7 +11,7 @@ public class CurrentRatesProvider {
 
     public static List<Rate> getActualRates() {
         String json = ExchangeRatesDownloader
-                .readUrl("http://api.nbp.pl/api/exch3angerates/tables/a/last/2?format=json")
+                .readUrl("http://api.nbp.pl/api/exchangerates/tables/a/last/2?format=json")
                 .orElseThrow(RuntimeException::new);
         Gson gson = new Gson();
 

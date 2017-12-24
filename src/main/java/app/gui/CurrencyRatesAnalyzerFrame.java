@@ -11,6 +11,7 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer{
 
     public CurrencyRatesAnalyzerFrame() {
         prepareFrameSizeAndTitle();
+        setResizable(false);
         setVisible(true);
         MessagesReader.getInstance().addObserver(this);
     }
