@@ -49,9 +49,9 @@ class DashboardTable extends JTable implements Observer {
 
     @Override
     public void update(java.util.Observable o, Object arg) {
-        getColumnModel().getColumn(0).setHeaderValue(MessagesReader.getInstance().getMessage("DashboardTableCurrencyCode"));
-        getColumnModel().getColumn(1).setHeaderValue(MessagesReader.getInstance().getMessage("DashboardTableCurrencyValue"));
-        getColumnModel().getColumn(2).setHeaderValue(MessagesReader.getInstance().getMessage("DashboardTableCurrencyChange"));
+        getColumnModel().getColumn(0).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyCode"));
+        getColumnModel().getColumn(1).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyValue"));
+        getColumnModel().getColumn(2).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyChange"));
     }
 
     @Override

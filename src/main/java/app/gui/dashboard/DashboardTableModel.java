@@ -14,9 +14,9 @@ class DashboardTableModel extends AbstractTableModel{
 
     private List<Rate> rateList = new ArrayList<>();
     private String[] columnNames = {
-            MessagesReader.getInstance().getMessage("DashboardTableCurrencyCode"),
-            MessagesReader.getInstance().getMessage("DashboardTableCurrencyValue"),
-            MessagesReader.getInstance().getMessage("DashboardTableCurrencyChange")
+            MessagesReader.getInstance().getMessage("CurrencyCode"),
+            MessagesReader.getInstance().getMessage("CurrencyValue"),
+            MessagesReader.getInstance().getMessage("CurrencyChange")
     };
 
     @Override

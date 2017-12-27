@@ -1,7 +1,6 @@
 package app.gui;
 
 import app.gui.dashboard.DashboardPanel;
-import app.gui.favourite.FavouritePanel;
 import app.gui.menu.MenuButton;
 import app.gui.search.SearchPanel;
 import app.gui.settings.SettingsPanel;
@@ -21,7 +20,6 @@ class NavigationPanel extends JPanel {
 	private List<MenuButton> menuButtonList;
 	private final Map<String, BasicContentPanel> PANELS = new LinkedHashMap<String, BasicContentPanel>() {{
 		put("Dashboard", new DashboardPanel());
-		put("Favourite", new FavouritePanel());
 		put("Search", new SearchPanel());
 		put("Settings", new SettingsPanel());
 	}};
