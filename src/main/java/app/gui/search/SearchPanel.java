@@ -6,6 +6,14 @@ import app.nbp.service.CurrencyCodesProvider;
 import lombok.Getter;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +21,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class SearchPanel extends BasicContentPanel implements Observer{
+public class SearchPanel extends BasicContentPanel implements Observer {
 
     private final String CODE_LABEL_MESSAGE_KEY = "CurrencyCode";
     private final String START_DATE_LABEL_MESSAGE_KEY = "StartDate";
@@ -21,7 +29,7 @@ public class SearchPanel extends BasicContentPanel implements Observer{
     private final String SEARCH_BUTTON_LABEL_MESSAGE_KEY = "Search";
     private final JPanel contentPanel;
     private JPanel formPanel;
-    //    private JPanel chartPanel;
+    private ChartPanel chartPanel;
     private JLabel codeLabel;
 
     @Getter
@@ -44,10 +52,38 @@ public class SearchPanel extends BasicContentPanel implements Observer{
         setFormPanel();
 
         contentPanel.add(formPanel, BorderLayout.NORTH);
-//		contentPanel.add(chartPanel, BorderLayout.CENTER);
+        setChartPanel();
+        contentPanel.add(chartPanel, BorderLayout.CENTER);
         addContentPanel(contentPanel);
 
         MessagesReader.getInstance().addObserver(this);
+    }
+
+    private void setChartPanel() {
+        XYDataset dataset = createDataset();
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                "Title",
+                "osX",
+                "osY",
+                dataset
+        );
+
+
+        chartPanel = new ChartPanel(chart);
+    }
+
+    private XYDataset createDataset() {
+        TimeSeries timeSeries = new TimeSeries("AA", Day.class);
+
+        Date now = new Date();
+        Date tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+        timeSeries.add(new Day(now), 121);
+        timeSeries.add(new Day(tomorrow), 129);
+
+        TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
+        timeSeriesCollection.addSeries(timeSeries);
+        return timeSeriesCollection;
     }
 
     private void setFormPanel() {
@@ -81,7 +117,7 @@ public class SearchPanel extends BasicContentPanel implements Observer{
 
         startDate = new JXDatePicker();
         configureDatePicker(startDate);
-        startDate.setDate(new Date(System.currentTimeMillis()-24*60*60*1000));
+        startDate.setDate(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000));
         jPanel.add(startDate);
 
         GridBagConstraints constraints = new GridBagConstraints();
