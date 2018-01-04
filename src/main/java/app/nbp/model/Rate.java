@@ -22,6 +22,9 @@ public class Rate {
 	private String code;
 
 	@Transient
+	private String effectiveDate;
+
+	@Transient
 	private double mid;
 
 	@Transient

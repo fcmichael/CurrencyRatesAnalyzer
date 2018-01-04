@@ -17,4 +17,6 @@
     <entry key="EndDate">Do</entry>
     <entry key="DataOrderException">Data początkowa musi być wcześniejsza od daty zakończenia</entry>
     <entry key="DaysLimitExceed">Przekroczono limit 367 dni</entry>
+    <entry key="EmptyCurrencyCode">Uzupełnij kod waluty</entry>
+    <entry key="FutureDateException">Data zakończenia musi być wcześniejsza lub równa dacie dzisiejszej</entry>
 </properties>

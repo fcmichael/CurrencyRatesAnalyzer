@@ -2,9 +2,9 @@ package app.gui.search.exception;
 
 import app.i18n.I18nException;
 
-public class DaysLimitExceed extends I18nException {
+public class DaysLimitExceedException extends I18nException {
 
-    public DaysLimitExceed() {
+    public DaysLimitExceedException() {
         super("DaysLimitExceed", "Limit of 93 days has been exceeded");
     }
 }

@@ -6,7 +6,6 @@ import app.nbp.service.ExchangeRatesDownloader;
 import com.google.gson.Gson;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CurrentRatesProvider {
 

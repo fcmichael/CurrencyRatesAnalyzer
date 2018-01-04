@@ -1,10 +1,9 @@
 package app.gui.search;
 
 import app.gui.BasicContentPanel;
-import app.gui.search.exception.DateOrderException;
-import app.gui.search.exception.DaysLimitExceed;
 import app.i18n.MessagesReader;
 import app.nbp.service.CurrencyCodesProvider;
+import lombok.Getter;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
 
@@ -13,7 +12,6 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 public class SearchPanel extends BasicContentPanel implements Observer{
 
@@ -25,10 +23,16 @@ public class SearchPanel extends BasicContentPanel implements Observer{
     private JPanel formPanel;
     //    private JPanel chartPanel;
     private JLabel codeLabel;
+
+    @Getter
     private JComboBox<String> codeComboBox;
     private JLabel startDateLabel;
     private JLabel endDateLabel;
+
+    @Getter
     private JXDatePicker startDate;
+
+    @Getter
     private JXDatePicker endDate;
     private JButton searchButton;
     private MessagesReader messagesReader;
@@ -77,6 +81,7 @@ public class SearchPanel extends BasicContentPanel implements Observer{
 
         startDate = new JXDatePicker();
         configureDatePicker(startDate);
+        startDate.setDate(new Date(System.currentTimeMillis()-24*60*60*1000));
         jPanel.add(startDate);
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -95,6 +100,7 @@ public class SearchPanel extends BasicContentPanel implements Observer{
 
         endDate = new JXDatePicker();
         configureDatePicker(endDate);
+        endDate.setDate(new Date());
         jPanel.add(endDate);
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -108,7 +114,7 @@ public class SearchPanel extends BasicContentPanel implements Observer{
 
     private void setSearchButton() {
         searchButton = new JButton(messagesReader.getMessage(SEARCH_BUTTON_LABEL_MESSAGE_KEY));
-        searchButton.addActionListener(new SearchAction());
+        searchButton.addActionListener(new SearchAction(this));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridy = 1;
         constraints.gridx = 1;
@@ -122,30 +128,9 @@ public class SearchPanel extends BasicContentPanel implements Observer{
     private void configureDatePicker(JXDatePicker datePicker) {
         datePicker.getEditor().setEditable(false);
         datePicker.setLocale(messagesReader.getCurrentLanguage().getLocale());
-        datePicker.setDate(new Date());
         JPanel linkPanel = new JPanel();
         linkPanel.setVisible(false);
         datePicker.setLinkPanel(linkPanel);
-    }
-
-    void validateInput() {
-        validateDates();
-    }
-
-    private void validateDates() {
-        Date start = startDate.getDate();
-        Date end = endDate.getDate();
-
-        if (!end.after(start)) {
-            throw new DateOrderException();
-        }
-
-        long diffInMillis = Math.abs(end.getTime() - start.getTime());
-        long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-
-        if(diff > 367){
-            throw new DaysLimitExceed();
-        }
     }
 
     @Override
