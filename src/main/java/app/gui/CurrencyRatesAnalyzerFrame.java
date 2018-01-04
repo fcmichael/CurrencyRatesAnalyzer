@@ -1,15 +1,22 @@
 package app.gui;
 
+import app.db.DbFacade;
 import app.i18n.MessagesReader;
 import app.util.PropertiesReader;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
 public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer{
 
+    DbFacade dbFacade;
+
     public CurrencyRatesAnalyzerFrame() {
+        dbFacade = new DbFacade();
         prepareFrameSizeAndTitle();
         setResizable(false);
         setVisible(true);
@@ -18,7 +25,16 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer{
 
     private void prepareFrameSizeAndTitle() {
         setTitle(MessagesReader.getInstance().getMessage("CurrencyRatesAnalyzerFrameName"));
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+//                dbFacade.findAll();
+//                dbFacade.close();
+                Logger.getRootLogger().info("Application end");
+                System.exit(0);
+            }
+        });
         setSize(Integer.parseInt(PropertiesReader.getProperty("frame.size.width", "800")),
                 Integer.parseInt(PropertiesReader.getProperty("frame.size.height", "600")));
         setLocation(Integer.parseInt(PropertiesReader.getProperty("frame.location.x", "0")),

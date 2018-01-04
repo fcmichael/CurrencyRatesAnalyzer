@@ -1,16 +1,29 @@
 package app.nbp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+@Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class Rate {
+
+    @Id
+    @GeneratedValue
+    private Integer id;
+
 	private String code;
+
+	@Transient
 	private double mid;
+
+	@Transient
 	private double change;
 }

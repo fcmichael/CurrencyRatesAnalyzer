@@ -8,6 +8,5 @@ public class CurrencyRatesAnalyzer {
     public static void main(String[] args){
         Logger.getRootLogger().info("Application start");
         new CurrencyRatesAnalyzerFrame();
-        Logger.getRootLogger().info("Application end");
     }
 }

@@ -3,14 +3,14 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
     <persistence-unit name="CRA" transaction-type="RESOURCE_LOCAL">
-
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:file:${user.home}/CurrencyRatesAnalyzer/db"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:file:${user.home}/CurrencyRatesAnalyzer/cra;MV_STORE=FALSE;MVCC=FALSE"/>
             <property name="javax.persistence.jdbc.username" value="sa"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>

@@ -1,15 +1,21 @@
 package app.gui.search;
 
 import app.gui.BasicContentPanel;
+import app.gui.search.exception.DateOrderException;
+import app.gui.search.exception.DaysLimitExceed;
 import app.i18n.MessagesReader;
+import app.nbp.analyse.CurrentRatesProvider;
+import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
-public class SearchPanel extends BasicContentPanel {
+public class SearchPanel extends BasicContentPanel implements Observer{
 
     private final String CODE_LABEL_MESSAGE_KEY = "CurrencyCode";
     private final String START_DATE_LABEL_MESSAGE_KEY = "StartDate";
@@ -19,6 +25,7 @@ public class SearchPanel extends BasicContentPanel {
     private JPanel formPanel;
     //    private JPanel chartPanel;
     private JLabel codeLabel;
+    private JComboBox<String> codeComboBox;
     private JLabel startDateLabel;
     private JLabel endDateLabel;
     private JXDatePicker startDate;
@@ -35,6 +42,8 @@ public class SearchPanel extends BasicContentPanel {
         contentPanel.add(formPanel, BorderLayout.NORTH);
 //		contentPanel.add(chartPanel, BorderLayout.CENTER);
         addContentPanel(contentPanel);
+
+        MessagesReader.getInstance().addObserver(this);
     }
 
     private void setFormPanel() {
@@ -48,8 +57,7 @@ public class SearchPanel extends BasicContentPanel {
     private void setCodeInput() {
         JPanel jPanel = new JPanel();
         codeLabel = new JLabel(messagesReader.getMessage(CODE_LABEL_MESSAGE_KEY));
-        String[] codes = {"EUR", "USD"};
-        JComboBox<String> codeComboBox = new JComboBox<>(codes);
+        codeComboBox = new JComboBox<>(new String[]{});
 
         jPanel.add(codeLabel);
         jPanel.add(codeComboBox);
@@ -100,6 +108,7 @@ public class SearchPanel extends BasicContentPanel {
 
     private void setSearchButton() {
         searchButton = new JButton(messagesReader.getMessage(SEARCH_BUTTON_LABEL_MESSAGE_KEY));
+        searchButton.addActionListener(new SearchAction());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridy = 1;
         constraints.gridx = 1;
@@ -119,8 +128,53 @@ public class SearchPanel extends BasicContentPanel {
         datePicker.setLinkPanel(linkPanel);
     }
 
+    void validateInput() {
+        validateDates();
+    }
+
+    private void validateDates() {
+        Date start = startDate.getDate();
+        Date end = endDate.getDate();
+
+        if (!end.after(start)) {
+            throw new DateOrderException();
+        }
+
+        long diffInMillis = Math.abs(end.getTime() - start.getTime());
+        long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+
+        if(diff > 367){
+            throw new DaysLimitExceed();
+        }
+    }
+
     @Override
     public void updateData() {
+        SwingWorker swingWorker = new SwingWorker<java.util.List<String>, Object>() {
+
+            @Override
+            protected java.util.List<String> doInBackground() {
+                return CurrentRatesProvider.getCurrencyCodes();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    List<String> rateList = get();
+                    String[] strings = rateList.toArray(new String[0]);
+                    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(strings);
+                    codeComboBox.setModel(model);
+                } catch (InterruptedException | ExecutionException e) {
+                    Logger.getRootLogger().warn("Exception while currency codes loading", e);
+                }
+            }
+        };
+
+        swingWorker.execute();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
         codeLabel.setText(messagesReader.getMessage(CODE_LABEL_MESSAGE_KEY));
         startDateLabel.setText(messagesReader.getMessage(START_DATE_LABEL_MESSAGE_KEY));
         endDateLabel.setText(messagesReader.getMessage(END_DATE_LABEL_MESSAGE_KEY));
@@ -129,5 +183,4 @@ public class SearchPanel extends BasicContentPanel {
         startDate.setLocale(locale);
         endDate.setLocale(locale);
     }
-
 }

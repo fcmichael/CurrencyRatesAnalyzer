@@ -15,4 +15,6 @@
     <entry key="Search">Szukaj</entry>
     <entry key="StartDate">Od</entry>
     <entry key="EndDate">Do</entry>
+    <entry key="DataOrderException">Data początkowa musi być wcześniejsza od daty zakończenia</entry>
+    <entry key="DaysLimitExceed">Przekroczono limit 367 dni</entry>
 </properties>
