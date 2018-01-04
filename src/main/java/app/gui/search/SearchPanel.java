@@ -4,7 +4,7 @@ import app.gui.BasicContentPanel;
 import app.gui.search.exception.DateOrderException;
 import app.gui.search.exception.DaysLimitExceed;
 import app.i18n.MessagesReader;
-import app.nbp.analyse.CurrentRatesProvider;
+import app.nbp.service.CurrencyCodesProvider;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
 
@@ -154,7 +154,7 @@ public class SearchPanel extends BasicContentPanel implements Observer{
 
             @Override
             protected java.util.List<String> doInBackground() {
-                return CurrentRatesProvider.getCurrencyCodes();
+                return CurrencyCodesProvider.getCurrencyCodes();
             }
 
             @Override
