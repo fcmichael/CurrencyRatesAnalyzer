@@ -13,7 +13,7 @@ import java.util.Observer;
 
 public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer{
 
-    DbFacade dbFacade;
+    private final DbFacade dbFacade;
 
     public CurrencyRatesAnalyzerFrame() {
         dbFacade = new DbFacade();

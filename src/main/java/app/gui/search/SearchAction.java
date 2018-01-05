@@ -6,17 +6,20 @@ import app.gui.search.exception.EmptyCurrencyCodeException;
 import app.gui.search.exception.FutureDateException;
 import app.i18n.I18nException;
 import app.nbp.analyse.CurrencyRateAnalyzer;
+import app.nbp.model.Rate;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class SearchAction extends AbstractAction {
+class SearchAction extends AbstractAction {
 
-    private SearchPanel searchPanel;
+    private final SearchPanel searchPanel;
 
     SearchAction(SearchPanel searchPanel) {
         this.searchPanel = searchPanel;
@@ -31,7 +34,25 @@ public class SearchAction extends AbstractAction {
                 String startDate = dateFormat.format(searchPanel.getStartDate().getDate());
                 String endDate = dateFormat.format(searchPanel.getEndDate().getDate());
 
-                CurrencyRateAnalyzer.analyze(currencyCode, startDate, endDate);
+                SwingWorker swingWorker = new SwingWorker<List<Rate>, Object>() {
+
+                    @Override
+                    protected List<Rate> doInBackground() {
+                        return CurrencyRateAnalyzer.analyze(currencyCode, startDate, endDate);
+                    }
+
+                    @Override
+                    protected void done() {
+                        try {
+                            List<Rate> rateList = get();
+                            searchPanel.getChartPanel().setChart(SearchChartPanel.createChart(rateList, currencyCode + " : " + startDate + " - " + endDate));
+                        } catch (InterruptedException | ExecutionException e) {
+                            Logger.getRootLogger().warn("Exception while currency codes loading", e);
+                        }
+                    }
+                };
+
+                swingWorker.execute();
             }
         } catch (I18nException ex){
             Logger.getRootLogger().warn(ex.getMessage());

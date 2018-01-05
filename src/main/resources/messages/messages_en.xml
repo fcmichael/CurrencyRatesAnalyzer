@@ -19,4 +19,6 @@
     <entry key="DaysLimitExceed">Limit of 367 days has been exceeded</entry>
     <entry key="EmptyCurrencyCode">Fill currency code box</entry>
     <entry key="FutureDateException">End date must be less or equal today</entry>
+    <entry key="SearchChartXLabel">Date</entry>
+    <entry key="SearchChartYLabel">Value</entry>
 </properties>

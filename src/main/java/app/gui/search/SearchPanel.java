@@ -6,14 +6,7 @@ import app.nbp.service.CurrencyCodesProvider;
 import lombok.Getter;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +14,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+@Getter
 public class SearchPanel extends BasicContentPanel implements Observer {
 
     private final String CODE_LABEL_MESSAGE_KEY = "CurrencyCode";
@@ -31,16 +25,10 @@ public class SearchPanel extends BasicContentPanel implements Observer {
     private JPanel formPanel;
     private ChartPanel chartPanel;
     private JLabel codeLabel;
-
-    @Getter
     private JComboBox<String> codeComboBox;
     private JLabel startDateLabel;
     private JLabel endDateLabel;
-
-    @Getter
     private JXDatePicker startDate;
-
-    @Getter
     private JXDatePicker endDate;
     private JButton searchButton;
     private MessagesReader messagesReader;
@@ -49,41 +37,14 @@ public class SearchPanel extends BasicContentPanel implements Observer {
         super("Search");
         contentPanel = new JPanel(new BorderLayout());
         messagesReader = MessagesReader.getInstance();
+        chartPanel = new ChartPanel(SearchChartPanel.createChart(Collections.emptyList(), ""));
         setFormPanel();
 
         contentPanel.add(formPanel, BorderLayout.NORTH);
-        setChartPanel();
         contentPanel.add(chartPanel, BorderLayout.CENTER);
         addContentPanel(contentPanel);
 
         MessagesReader.getInstance().addObserver(this);
-    }
-
-    private void setChartPanel() {
-        XYDataset dataset = createDataset();
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Title",
-                "osX",
-                "osY",
-                dataset
-        );
-
-
-        chartPanel = new ChartPanel(chart);
-    }
-
-    private XYDataset createDataset() {
-        TimeSeries timeSeries = new TimeSeries("AA", Day.class);
-
-        Date now = new Date();
-        Date tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-
-        timeSeries.add(new Day(now), 121);
-        timeSeries.add(new Day(tomorrow), 129);
-
-        TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
-        timeSeriesCollection.addSeries(timeSeries);
-        return timeSeriesCollection;
     }
 
     private void setFormPanel() {
@@ -154,7 +115,7 @@ public class SearchPanel extends BasicContentPanel implements Observer {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridy = 1;
         constraints.gridx = 1;
-        constraints.insets = new Insets(20, 0, 0, 0);
+        constraints.insets = new Insets(20, 0, 20, 0);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.anchor = GridBagConstraints.CENTER;
 
@@ -203,5 +164,11 @@ public class SearchPanel extends BasicContentPanel implements Observer {
         Locale locale = messagesReader.getCurrentLanguage().getLocale();
         startDate.setLocale(locale);
         endDate.setLocale(locale);
+        JPanel linkPanel = new JPanel();
+        linkPanel.setVisible(false);
+        startDate.setLinkPanel(linkPanel);
+        endDate.setLinkPanel(linkPanel);
+        chartPanel.getChart().getXYPlot().getDomainAxis().setLabel(MessagesReader.getInstance().getMessage("SearchChartXLabel"));
+        chartPanel.getChart().getXYPlot().getRangeAxis().setLabel(MessagesReader.getInstance().getMessage("SearchChartYLabel"));
     }
 }

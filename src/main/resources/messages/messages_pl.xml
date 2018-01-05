@@ -19,4 +19,6 @@
     <entry key="DaysLimitExceed">Przekroczono limit 367 dni</entry>
     <entry key="EmptyCurrencyCode">Uzupełnij kod waluty</entry>
     <entry key="FutureDateException">Data zakończenia musi być wcześniejsza lub równa dacie dzisiejszej</entry>
+    <entry key="SearchChartXLabel">Data</entry>
+    <entry key="SearchChartYLabel">Wartość</entry>
 </properties>

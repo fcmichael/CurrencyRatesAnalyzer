@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -22,7 +23,7 @@ public class Rate {
 	private String code;
 
 	@Transient
-	private String effectiveDate;
+	private Date effectiveDate;
 
 	@Transient
 	private double mid;

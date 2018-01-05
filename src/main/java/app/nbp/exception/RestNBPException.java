@@ -1,4 +1,4 @@
 package app.nbp.exception;
 
-public class RestNBPException {
+class RestNBPException {
 }

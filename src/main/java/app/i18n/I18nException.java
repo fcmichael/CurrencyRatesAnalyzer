@@ -1,9 +1,9 @@
 package app.i18n;
 
 abstract public class I18nException extends RuntimeException {
-    private String messageKey;
+    private final String messageKey;
 
-    public I18nException(String messageKey, String message) {
+    protected I18nException(String messageKey, String message) {
         super(message);
         this.messageKey = messageKey;
     }
