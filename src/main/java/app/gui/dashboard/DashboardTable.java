@@ -35,6 +35,8 @@ class DashboardTable extends JTable implements Observer {
         getTableHeader().setReorderingAllowed(false);
         setRowHeight(22);
         setAutoCreateColumnsFromModel(false);
+//        setRowSelectionAllowed(true);
+        setSelectionBackground(Color.blue);
     }
 
     private void setTableModel() {
@@ -61,17 +63,26 @@ class DashboardTable extends JTable implements Observer {
         Component component = super.prepareRenderer(renderer, row, column);
         Object value = dashboardTableModel.getValueAt(convertRowIndexToModel(row), column);
 
-        if (column == 2) { // rate change
-            double val = (double) value;
-            if (val > 0) {
-                component.setBackground(Color.green);
-            } else if (val < 0) {
-                component.setBackground(Color.red);
+        if(this.getSelectedRow() == row){
+            component.setBackground(Color.black);
+            component.setForeground(Color.white);
+        } else {
+            if (column == 2) { // rate change
+                double val = (double) value;
+                if (val > 0) {
+                    component.setBackground(Color.green);
+                    component.setForeground(Color.black);
+                } else if (val < 0) {
+                    component.setBackground(Color.red);
+                    component.setForeground(Color.black);
+                } else {
+                    component.setBackground(Color.white);
+                    component.setForeground(Color.black);
+                }
             } else {
                 component.setBackground(Color.white);
+                component.setForeground(Color.black);
             }
-        } else {
-            component.setBackground(Color.white);
         }
 
         return component;
