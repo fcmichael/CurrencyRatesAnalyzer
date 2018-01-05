@@ -1,6 +1,7 @@
 package app.gui.search;
 
 import app.gui.BasicContentPanel;
+import app.gui.settings.plaf.PLAFConfiguration;
 import app.i18n.MessagesReader;
 import app.nbp.service.CurrencyCodesProvider;
 import lombok.Getter;
@@ -45,6 +46,7 @@ public class SearchPanel extends BasicContentPanel implements Observer {
         addContentPanel(contentPanel);
 
         MessagesReader.getInstance().addObserver(this);
+        PLAFConfiguration.getInstance().addObserver(this);
     }
 
     private void setFormPanel() {
@@ -157,18 +159,21 @@ public class SearchPanel extends BasicContentPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        codeLabel.setText(messagesReader.getMessage(CODE_LABEL_MESSAGE_KEY));
-        startDateLabel.setText(messagesReader.getMessage(START_DATE_LABEL_MESSAGE_KEY));
-        endDateLabel.setText(messagesReader.getMessage(END_DATE_LABEL_MESSAGE_KEY));
-        searchButton.setText(messagesReader.getMessage(SEARCH_BUTTON_LABEL_MESSAGE_KEY));
-        Locale locale = messagesReader.getCurrentLanguage().getLocale();
-        startDate.setLocale(locale);
-        endDate.setLocale(locale);
-        JPanel linkPanel = new JPanel();
-        linkPanel.setVisible(false);
-        startDate.setLinkPanel(linkPanel);
-        endDate.setLinkPanel(linkPanel);
-        chartPanel.getChart().getXYPlot().getDomainAxis().setLabel(MessagesReader.getInstance().getMessage("SearchChartXLabel"));
-        chartPanel.getChart().getXYPlot().getRangeAxis().setLabel(MessagesReader.getInstance().getMessage("SearchChartYLabel"));
+        if(o instanceof PLAFConfiguration){
+            JPanel linkPanel = new JPanel();
+            linkPanel.setVisible(false);
+            startDate.setLinkPanel(linkPanel);
+            endDate.setLinkPanel(linkPanel);
+        } else if(o instanceof MessagesReader){
+            codeLabel.setText(messagesReader.getMessage(CODE_LABEL_MESSAGE_KEY));
+            startDateLabel.setText(messagesReader.getMessage(START_DATE_LABEL_MESSAGE_KEY));
+            endDateLabel.setText(messagesReader.getMessage(END_DATE_LABEL_MESSAGE_KEY));
+            searchButton.setText(messagesReader.getMessage(SEARCH_BUTTON_LABEL_MESSAGE_KEY));
+            Locale locale = messagesReader.getCurrentLanguage().getLocale();
+            startDate.setLocale(locale);
+            endDate.setLocale(locale);
+            chartPanel.getChart().getXYPlot().getDomainAxis().setLabel(MessagesReader.getInstance().getMessage("SearchChartXLabel"));
+            chartPanel.getChart().getXYPlot().getRangeAxis().setLabel(MessagesReader.getInstance().getMessage("SearchChartYLabel"));
+        }
     }
 }

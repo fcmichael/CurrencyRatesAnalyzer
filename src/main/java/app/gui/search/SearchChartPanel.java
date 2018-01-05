@@ -39,7 +39,6 @@ class SearchChartPanel {
 			dateBreak = (1+(size/90))*5;
 		}
 
-		System.out.println(rateList.size());
 		axisX.setTickUnit(new DateTickUnit(DateTickUnitType.DAY, dateBreak));
 		axisX.setTickMarkPosition(DateTickMarkPosition.START);
 		axisX.setDateFormatOverride(new SimpleDateFormat("dd-MM"));

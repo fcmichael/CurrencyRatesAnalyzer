@@ -1,37 +1,36 @@
 package app.gui.settings.plaf;
 
 import app.i18n.MessagesReader;
-import com.sun.java.swing.plaf.motif.MotifLookAndFeel;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.stream.Collectors;
 
 public class PLAFSelectPanel extends JPanel implements Observer {
 
 	private final JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage("SettingsPattern"));
 
-	private final Map<String, LookAndFeel> LOOK_AND_FEEL_LIST = new TreeMap<String, LookAndFeel>() {{
-		put("Metal", new MetalLookAndFeel());
-		put("Motif", new MotifLookAndFeel());
-		put("Nimbus", new NimbusLookAndFeel());
-	}};
+	private final PLAFConfiguration plafConfiguration;
 
 	public PLAFSelectPanel() {
+		plafConfiguration = PLAFConfiguration.getInstance();
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
 		this.jLabel.setMaximumSize(new Dimension(250, 400));
 		this.jLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		List<PLAFRadioButton> PLAFRadioButtons = LOOK_AND_FEEL_LIST.entrySet().stream()
-				.map(entry -> new PLAFRadioButton(entry.getKey(), entry.getValue(), new Dimension(200, 40)))
+		List<PLAFRadioButton> PLAFRadioButtons = plafConfiguration.getLOOK_AND_FEEL_LIST().entrySet().stream()
+				.map(entry -> {
+					PLAFRadioButton button = new PLAFRadioButton(entry.getKey(), entry.getValue(), new Dimension(200, 40));
+					if(button.getLookAndFeel().equals(plafConfiguration.getCurrentLookAndFeel())){
+						button.setSelected(true);
+					}
+					return button;
+				})
 				.collect(Collectors.toList());
-
-		PLAFRadioButtons.get(0).setSelected(true);
 
 		ButtonGroup group = new ButtonGroup();
 		PLAFRadioButtons.forEach(group::add);

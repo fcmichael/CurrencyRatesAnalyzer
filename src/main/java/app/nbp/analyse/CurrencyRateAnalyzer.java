@@ -15,8 +15,6 @@ public class CurrencyRateAnalyzer {
                 startDate + "/" +
                 endDate + "?format=json";
 
-        System.out.println(url);
-
         String json = ExchangeRatesDownloader
                 .readUrl(url)
                 .orElseThrow(RuntimeException::new);

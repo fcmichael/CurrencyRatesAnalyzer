@@ -11,11 +11,6 @@ class PLAFChangeAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		PLAFRadioButton PLAFRadioButton = (PLAFRadioButton) e.getSource();
 		Logger.getRootLogger().info("PLAF event - change to: " + PLAFRadioButton.getText());
-		try {
-			UIManager.setLookAndFeel(PLAFRadioButton.getLookAndFeel());
-			SwingUtilities.updateComponentTreeUI(PLAFRadioButton.getRootPane());
-		} catch (UnsupportedLookAndFeelException ex) {
-			Logger.getRootLogger().warn("LookAndFeel not found", ex);
-		}
+		PLAFConfiguration.getInstance().changePLAF(PLAFRadioButton.getLookAndFeel(), PLAFRadioButton.getRootPane());
 	}
 }
