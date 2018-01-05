@@ -11,6 +11,7 @@ import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -35,7 +36,7 @@ public class SearchPanel extends BasicContentPanel implements Observer {
     private MessagesReader messagesReader;
 
     public SearchPanel() {
-        super("Search");
+        super("Search", KeyEvent.VK_S);
         contentPanel = new JPanel(new BorderLayout());
         messagesReader = MessagesReader.getInstance();
         chartPanel = new ChartPanel(SearchChartPanel.createChart(Collections.emptyList(), ""));

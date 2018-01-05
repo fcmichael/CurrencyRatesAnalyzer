@@ -37,7 +37,7 @@ class NavigationPanel extends JPanel {
 		JPanel menuPanel = new JPanel();
 		menuPanel.setLayout(new GridLayout(0, PANELS.size()));
 		this.menuButtonList = PANELS.entrySet().stream()
-				.map(entry -> new MenuButton(MessagesReader.getInstance().getMessage(entry.getKey()), this.cardPanel, entry.getValue()))
+				.map(entry -> new MenuButton(MessagesReader.getInstance().getMessage(entry.getKey()), this.cardPanel, entry.getValue(), entry.getValue().getMnemonic()))
 				.collect(Collectors.toList());
 		this.menuButtonList.forEach(menuPanel::add);
 		return menuPanel;

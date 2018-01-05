@@ -1,11 +1,11 @@
 package app.gui.dashboard;
 
-
 import app.gui.BasicContentPanel;
 import app.i18n.MessagesReader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,7 +16,7 @@ public class DashboardPanel extends BasicContentPanel implements Observer {
     private final String tableLabelMessageKey = "DashboardTableHeader";
 
     public DashboardPanel() {
-        super("Dashboard");
+        super("Dashboard", KeyEvent.VK_G);
         setTableLabel();
         setTable();
         setContentPanel();
