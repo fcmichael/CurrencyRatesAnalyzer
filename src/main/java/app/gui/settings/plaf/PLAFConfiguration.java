@@ -15,16 +15,16 @@ import java.util.TreeMap;
 public class PLAFConfiguration extends Observable{
 
 	private static PLAFConfiguration instance = new PLAFConfiguration();
-	private final Map<String, LookAndFeel> LOOK_AND_FEEL_LIST;
+	private final Map<String, LookAndFeel> LOOK_AND_FEEL_MAP;
 	private LookAndFeel currentLookAndFeel;
 
 	private PLAFConfiguration() {
-		this.LOOK_AND_FEEL_LIST = new TreeMap<String, LookAndFeel>() {{
+		this.LOOK_AND_FEEL_MAP = new TreeMap<String, LookAndFeel>() {{
 			put("Metal", new MetalLookAndFeel());
 			put("Motif", new MotifLookAndFeel());
 			put("Nimbus", new NimbusLookAndFeel());
 		}};
-		this.currentLookAndFeel = LOOK_AND_FEEL_LIST.get("Metal");
+		this.currentLookAndFeel = LOOK_AND_FEEL_MAP.get("Metal");
 	}
 
 	public static PLAFConfiguration getInstance() {

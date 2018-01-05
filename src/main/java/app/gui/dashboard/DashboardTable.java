@@ -3,6 +3,7 @@ package app.gui.dashboard;
 import app.i18n.MessagesReader;
 import app.nbp.analyse.CurrentRatesProvider;
 import app.nbp.model.Rate;
+import lombok.Getter;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
+@Getter
 class DashboardTable extends JTable implements Observer {
 
     private DashboardTableModel dashboardTableModel;

@@ -22,7 +22,7 @@ public class PLAFSelectPanel extends JPanel implements Observer {
 		this.jLabel.setMaximumSize(new Dimension(250, 400));
 		this.jLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		List<PLAFRadioButton> PLAFRadioButtons = plafConfiguration.getLOOK_AND_FEEL_LIST().entrySet().stream()
+		List<PLAFRadioButton> PLAFRadioButtons = plafConfiguration.getLOOK_AND_FEEL_MAP().entrySet().stream()
 				.map(entry -> {
 					PLAFRadioButton button = new PLAFRadioButton(entry.getKey(), entry.getValue(), new Dimension(200, 40));
 					if(button.getLookAndFeel().equals(plafConfiguration.getCurrentLookAndFeel())){
