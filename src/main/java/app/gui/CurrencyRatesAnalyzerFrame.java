@@ -13,10 +13,7 @@ import java.util.Observer;
 
 public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer{
 
-    private final DbFacade dbFacade;
-
     public CurrencyRatesAnalyzerFrame() {
-        dbFacade = new DbFacade();
         prepareFrameSizeAndTitle();
         setResizable(false);
         setVisible(true);
@@ -29,8 +26,7 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer{
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-//                dbFacade.findAll();
-//                dbFacade.close();
+                DbFacade.getInstance().close();
                 Logger.getRootLogger().info("Application end");
                 System.exit(0);
             }

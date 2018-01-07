@@ -1,7 +1,7 @@
 package app.gui.dashboard;
 
+import app.db.DbFacade;
 import app.i18n.MessagesReader;
-import app.nbp.analyse.CurrentRatesProvider;
 import app.nbp.exception.RestNBPException;
 import app.nbp.model.Rate;
 import lombok.Getter;
@@ -86,7 +86,7 @@ class DashboardTable extends JTable implements Observer {
             protected List<Rate> doInBackground() {
                 List<Rate> rates = new ArrayList<>();
                 try {
-                    return CurrentRatesProvider.getActualRates();
+                    return DbFacade.getInstance().findAndUpdate();
                 } catch (RestNBPException rest) {
                     Logger.getRootLogger().warn(rest.getMessage());
                     rest.displayMessageDialog(DashboardTable.this);

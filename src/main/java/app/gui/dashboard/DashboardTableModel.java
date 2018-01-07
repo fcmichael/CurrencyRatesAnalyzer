@@ -51,7 +51,6 @@ class DashboardTableModel extends AbstractTableModel {
 
     public void setValueAt(Object value, int row, int col) {
         if (col == 3) {
-            // TODO: save to db
             rateList.get(row).setFavourite((Boolean) value);
             fireTableCellUpdated(row, col);
         }
