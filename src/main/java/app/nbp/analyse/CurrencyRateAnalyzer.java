@@ -2,7 +2,6 @@ package app.nbp.analyse;
 
 import app.nbp.model.Rate;
 import app.nbp.model.RateDTO;
-import app.nbp.service.ExchangeRatesDownloader;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class CurrencyRateAnalyzer {
 
         String json = ExchangeRatesDownloader
                 .readUrl(url)
-                .orElseThrow(RuntimeException::new);
+                .orElse("");
 
         Gson gson = new Gson();
 

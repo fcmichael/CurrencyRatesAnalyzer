@@ -1,4 +1,4 @@
-package app.nbp.service;
+package app.nbp.analyse;
 
 import app.nbp.model.Rate;
 import app.nbp.model.RateDTO;
@@ -12,7 +12,7 @@ public class CurrencyCodesProvider {
     public static List<String> getCurrencyCodes(){
         String json = ExchangeRatesDownloader
                 .readUrl("http://api.nbp.pl/api/exchangerates/tables/a?format=json")
-                .orElseThrow(RuntimeException::new);
+                .orElse("");
         Gson gson = new Gson();
         List<Rate> rates = gson.fromJson(json, RateDTO[].class)[0].getRates();
         return rates.stream().map(Rate::getCode).sorted().collect(Collectors.toList());

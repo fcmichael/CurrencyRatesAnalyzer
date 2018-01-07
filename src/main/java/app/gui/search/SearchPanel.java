@@ -3,7 +3,8 @@ package app.gui.search;
 import app.gui.BasicContentPanel;
 import app.gui.settings.plaf.PLAFConfiguration;
 import app.i18n.MessagesReader;
-import app.nbp.service.CurrencyCodesProvider;
+import app.nbp.analyse.CurrencyCodesProvider;
+import app.nbp.exception.RestNBPException;
 import lombok.Getter;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
@@ -135,11 +136,18 @@ public class SearchPanel extends BasicContentPanel implements Observer {
 
     @Override
     public void updateData() {
-        SwingWorker swingWorker = new SwingWorker<java.util.List<String>, Object>() {
+        SwingWorker swingWorker = new SwingWorker<List<String>, Object>() {
 
             @Override
-            protected java.util.List<String> doInBackground() {
-                return CurrencyCodesProvider.getCurrencyCodes();
+            protected List<String> doInBackground() {
+                List<String> codes = new ArrayList<>();
+                try {
+                    codes = CurrencyCodesProvider.getCurrencyCodes();
+                } catch(RestNBPException rest){
+                    Logger.getRootLogger().warn(rest.getMessage());
+                    rest.displayMessageDialog(SearchPanel.this);
+                }
+                return codes;
             }
 
             @Override

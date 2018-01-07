@@ -2,6 +2,7 @@ package app.gui.dashboard;
 
 import app.i18n.MessagesReader;
 import app.nbp.analyse.CurrentRatesProvider;
+import app.nbp.exception.RestNBPException;
 import app.nbp.model.Rate;
 import lombok.Getter;
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
@@ -35,7 +37,6 @@ class DashboardTable extends JTable implements Observer {
         getTableHeader().setReorderingAllowed(false);
         setRowHeight(22);
         setAutoCreateColumnsFromModel(false);
-//        setRowSelectionAllowed(true);
         setSelectionBackground(Color.blue);
     }
 
@@ -63,7 +64,7 @@ class DashboardTable extends JTable implements Observer {
         Component component = super.prepareRenderer(renderer, row, column);
         Object value = dashboardTableModel.getValueAt(convertRowIndexToModel(row), column);
 
-        if(this.getSelectedRow() == row){
+        if (this.getSelectedRow() == row) {
             component.setBackground(Color.black);
             component.setForeground(Color.white);
         } else {
@@ -93,7 +94,14 @@ class DashboardTable extends JTable implements Observer {
 
             @Override
             protected List<Rate> doInBackground() {
-                return CurrentRatesProvider.getActualRates();
+                List<Rate> rates = new ArrayList<>();
+                try {
+                    return CurrentRatesProvider.getActualRates();
+                } catch (RestNBPException rest) {
+                    Logger.getRootLogger().warn(rest.getMessage());
+                    rest.displayMessageDialog(DashboardTable.this);
+                }
+                return rates;
             }
 
             @Override

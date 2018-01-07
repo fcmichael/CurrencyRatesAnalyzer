@@ -21,4 +21,5 @@
     <entry key="FutureDateException">End date must be less or equal today</entry>
     <entry key="SearchChartXLabel">Date</entry>
     <entry key="SearchChartYLabel">Value</entry>
+    <entry key="DataLoadException">Couldn't download data</entry>
 </properties>

@@ -1,5 +1,6 @@
-package app.nbp.service;
+package app.nbp.analyse;
 
+import app.nbp.exception.RestNBPException;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
@@ -9,12 +10,12 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ExchangeRatesDownloader {
+class ExchangeRatesDownloader {
 
-    public static Optional<String> readUrl(String urlString) {
+    static Optional<String> readUrl(String urlString) {
         BufferedReader bufferedReader = null;
         InputStreamReader inputStreamReader = null;
-        String result = null;
+        String result;
 
         try {
             URL url = new URL(urlString);
@@ -24,7 +25,8 @@ public class ExchangeRatesDownloader {
             result = bufferedReader.lines().collect(Collectors.joining());
 
         } catch (IOException e) {
-            Logger.getRootLogger().warn("Exception while URL proceeding", e);
+            Logger.getRootLogger().warn("Exception while URL proceeding: " + urlString);
+            throw new RestNBPException();
         } finally {
             try {
                 if (bufferedReader != null) {

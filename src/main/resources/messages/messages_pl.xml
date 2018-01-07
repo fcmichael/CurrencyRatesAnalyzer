@@ -21,4 +21,5 @@
     <entry key="FutureDateException">Data zakończenia musi być wcześniejsza lub równa dacie dzisiejszej</entry>
     <entry key="SearchChartXLabel">Data</entry>
     <entry key="SearchChartYLabel">Wartość</entry>
+    <entry key="DataLoadException">Błąd podczas pobierania danych</entry>
 </properties>

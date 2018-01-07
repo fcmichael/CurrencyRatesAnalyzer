@@ -6,12 +6,14 @@ import app.gui.search.exception.EmptyCurrencyCodeException;
 import app.gui.search.exception.FutureDateException;
 import app.i18n.I18nException;
 import app.nbp.analyse.CurrencyRateAnalyzer;
+import app.nbp.exception.RestNBPException;
 import app.nbp.model.Rate;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -28,7 +30,7 @@ class SearchAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if(validateInput()){
+            if (validateInput()) {
                 String currencyCode = (String) searchPanel.getCodeComboBox().getSelectedItem();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
                 String startDate = dateFormat.format(searchPanel.getStartDate().getDate());
@@ -38,7 +40,14 @@ class SearchAction extends AbstractAction {
 
                     @Override
                     protected List<Rate> doInBackground() {
-                        return CurrencyRateAnalyzer.analyze(currencyCode, startDate, endDate);
+                        List<Rate> rates = new ArrayList<>();
+                        try{
+                            rates = CurrencyRateAnalyzer.analyze(currencyCode, startDate, endDate);
+                        } catch(RestNBPException rest){
+                            Logger.getRootLogger().warn(rest.getMessage());
+                            rest.displayMessageDialog((JComponent) e.getSource());
+                        }
+                        return rates;
                     }
 
                     @Override
@@ -53,20 +62,21 @@ class SearchAction extends AbstractAction {
                 };
 
                 swingWorker.execute();
+
             }
-        } catch (I18nException ex){
+        } catch (I18nException ex) {
             Logger.getRootLogger().warn(ex.getMessage());
-            showValidationError(e, ex.getLocalizedMessage());
+            ex.displayMessageDialog((JComponent) e.getSource());
         }
     }
 
-    private boolean validateInput(){
+    private boolean validateInput() {
         return validateDates() && validateCode();
     }
 
     private boolean validateCode() {
         JComboBox<String> comboBox = searchPanel.getCodeComboBox();
-        if(comboBox.getSelectedItem() == null){
+        if (comboBox.getSelectedItem() == null) {
             throw new EmptyCurrencyCodeException();
         }
         return true;
@@ -83,20 +93,14 @@ class SearchAction extends AbstractAction {
         long diffInMillis = Math.abs(end.getTime() - start.getTime());
         long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
 
-        if(diff > 367){
+        if (diff > 367) {
             throw new DaysLimitExceedException();
         }
 
-        if(end.after(new Date())){
+        if (end.after(new Date())) {
             throw new FutureDateException();
         }
 
         return true;
-    }
-
-    private void showValidationError(ActionEvent e, String message){
-        JButton aClass = (JButton) e.getSource();
-        JRootPane rootPane = aClass.getRootPane();
-        JOptionPane.showMessageDialog(rootPane, message, "", JOptionPane.ERROR_MESSAGE);
     }
 }
