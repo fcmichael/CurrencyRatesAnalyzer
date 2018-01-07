@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-class DashboardTableModel extends AbstractTableModel{
+class DashboardTableModel extends AbstractTableModel {
 
     private List<Rate> rateList = new ArrayList<>();
     private String[] columnNames = {
             MessagesReader.getInstance().getMessage("CurrencyCode"),
             MessagesReader.getInstance().getMessage("CurrencyValue"),
-            MessagesReader.getInstance().getMessage("CurrencyChange")
+            MessagesReader.getInstance().getMessage("CurrencyChange"),
+            MessagesReader.getInstance().getMessage("Favourite")
     };
 
     @Override
@@ -40,9 +41,25 @@ class DashboardTableModel extends AbstractTableModel{
                 return BigDecimal.valueOf(rate.getMid()).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
             case 2:
                 return BigDecimal.valueOf(rate.getChange()).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+            case 3: {
+                return rate.isFavourite();
+            }
             default:
                 return null;
         }
+    }
+
+    public void setValueAt(Object value, int row, int col) {
+        if (col == 3) {
+            // TODO: save to db
+            rateList.get(row).setFavourite((Boolean) value);
+            fireTableCellUpdated(row, col);
+        }
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == 3;
     }
 
     @Override
@@ -59,6 +76,8 @@ class DashboardTableModel extends AbstractTableModel{
                 return Double.class;
             case 2:
                 return Double.class;
+            case 3:
+                return Boolean.class;
             default:
                 return null;
         }

@@ -25,7 +25,6 @@ class DashboardTable extends JTable implements Observer {
         super();
         setTableModel();
         configureTable();
-        setTableCellHorizontalAlignment();
 
         MessagesReader.getInstance().addObserver(this);
     }
@@ -37,19 +36,12 @@ class DashboardTable extends JTable implements Observer {
         getTableHeader().setReorderingAllowed(false);
         setRowHeight(22);
         setAutoCreateColumnsFromModel(false);
-        setSelectionBackground(Color.blue);
+        setSelectionBackground(Color.black);
+        setSelectionForeground(Color.white);
     }
 
     private void setTableModel() {
         this.dashboardTableModel = new DashboardTableModel();
-    }
-
-    private void setTableCellHorizontalAlignment() {
-        DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer();
-        defaultTableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < dashboardTableModel.getColumnCount(); i++) {
-            getColumnModel().getColumn(i).setCellRenderer(defaultTableCellRenderer);
-        }
     }
 
     @Override
@@ -57,36 +49,34 @@ class DashboardTable extends JTable implements Observer {
         getColumnModel().getColumn(0).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyCode"));
         getColumnModel().getColumn(1).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyValue"));
         getColumnModel().getColumn(2).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyChange"));
+        getColumnModel().getColumn(3).setHeaderValue(MessagesReader.getInstance().getMessage("Favourite"));
     }
 
     @Override
-    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-        Component component = super.prepareRenderer(renderer, row, column);
-        Object value = dashboardTableModel.getValueAt(convertRowIndexToModel(row), column);
-
-        if (this.getSelectedRow() == row) {
-            component.setBackground(Color.black);
-            component.setForeground(Color.white);
+    public TableCellRenderer getCellRenderer(int row, int column) {
+        if (column == 3) {
+            return super.getCellRenderer(row, column);
         } else {
-            if (column == 2) { // rate change
-                double val = (double) value;
-                if (val > 0) {
-                    component.setBackground(Color.green);
-                    component.setForeground(Color.black);
-                } else if (val < 0) {
-                    component.setBackground(Color.red);
-                    component.setForeground(Color.black);
-                } else {
-                    component.setBackground(Color.white);
-                    component.setForeground(Color.black);
-                }
-            } else {
-                component.setBackground(Color.white);
-                component.setForeground(Color.black);
-            }
-        }
 
-        return component;
+            DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+            cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+            if (column == 2) {
+                double val = (double) getValueAt(row, column);
+                if (val > 0) {
+                    cellRenderer.setBackground(Color.green);
+                    cellRenderer.setForeground(Color.black);
+                } else if (val < 0) {
+                    cellRenderer.setBackground(Color.red);
+                    cellRenderer.setForeground(Color.black);
+                } else {
+                    cellRenderer.setBackground(Color.white);
+                    cellRenderer.setForeground(Color.black);
+                }
+            }
+
+            return cellRenderer;
+        }
     }
 
     void updateModel() {

@@ -22,6 +22,8 @@ public class Rate {
 
 	private String code;
 
+	private boolean favourite;
+
 	@Transient
 	private Date effectiveDate;
 

@@ -8,6 +8,7 @@
     <entry key="CurrencyCode">Kod waluty</entry>
     <entry key="CurrencyValue">Kurs wymiany</entry>
     <entry key="CurrencyChange">Zmiana kursu wymiany</entry>
+    <entry key="Favourite">Ulubione</entry>
     <entry key="Search">Wyszukaj</entry>
     <entry key="Settings">Ustawienia</entry>
     <entry key="SettingsLanguage">Język</entry>
