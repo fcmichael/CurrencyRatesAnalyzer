@@ -1,9 +1,8 @@
 package pl.michalkruk.pz.gui;
 
-import pl.michalkruk.pz.db.DbFacade;
+import org.apache.log4j.Logger;
 import pl.michalkruk.pz.i18n.MessagesReader;
 import pl.michalkruk.pz.util.PropertiesReader;
-import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
@@ -26,9 +25,8 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer{
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                DbFacade.getInstance().close();
-                Logger.getRootLogger().info("Application end");
-                System.exit(0);
+                setVisible(false);
+                Logger.getRootLogger().info("Close frame");
             }
         });
         setSize(Integer.parseInt(PropertiesReader.getProperty("frame.size.width", "800")),
