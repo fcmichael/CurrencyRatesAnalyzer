@@ -1,12 +1,13 @@
 package pl.michalkruk.pz;
 
+import org.apache.log4j.Logger;
 import pl.michalkruk.pz.db.DbFacade;
 import pl.michalkruk.pz.gui.CurrencyRatesAnalyzerFrame;
-import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CurrencyRatesAnalyzer {
 
@@ -24,30 +25,13 @@ public class CurrencyRatesAnalyzer {
                 new TrayIcon(new ImageIcon(CurrencyRatesAnalyzer.class.getResource("/images/tray/tray.png")).getImage());
         final SystemTray tray = SystemTray.getSystemTray();
 
-//        // Create a popup menu components
-//        MenuItem aboutItem = new MenuItem("About");
-//        CheckboxMenuItem cb1 = new CheckboxMenuItem("Set auto size");
-//        CheckboxMenuItem cb2 = new CheckboxMenuItem("Set tooltip");
-//        Menu displayMenu = new Menu("Display");
-//        MenuItem errorItem = new MenuItem("Error");
-//        MenuItem warningItem = new MenuItem("Warning");
-//        MenuItem infoItem = new MenuItem("Info");
-//        MenuItem noneItem = new MenuItem("None");
+        MenuItem aboutItem = new MenuItem("About");
         MenuItem exitItem = new MenuItem("Exit");
-//
-//        //Add components to popup menu
-//        popup.add(aboutItem);
-//        popup.addSeparator();
-//        popup.add(cb1);
-//        popup.add(cb2);
-//        popup.addSeparator();
-//        popup.add(displayMenu);
-//        displayMenu.add(errorItem);
-//        displayMenu.add(warningItem);
-//        displayMenu.add(infoItem);
-//        displayMenu.add(noneItem);
+
+        popupMenu.add(aboutItem);
+        popupMenu.addSeparator();
         popupMenu.add(exitItem);
-//
+
         trayIcon.setPopupMenu(popupMenu);
 
         try {
@@ -60,11 +44,18 @@ public class CurrencyRatesAnalyzer {
         trayIcon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(frame.isVisible()){
+                if(!frame.isVisible()){
                     frame.setVisible(true);
                 }
             }
         });
+
+        aboutItem.addActionListener(e ->
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Author: Michał Kruk I5B4S1",
+                        "",
+                        JOptionPane.INFORMATION_MESSAGE));
 
         exitItem.addActionListener(e -> {
             tray.remove(trayIcon);
