@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import pl.michalkruk.pz.gui.CurrencyRatesAnalyzerFrame;
 import pl.michalkruk.pz.gui.tray.CurrencyRatesAnalyzerTrayIcon;
 import pl.michalkruk.pz.nbp.analyse.AnalyzeThread;
+import pl.michalkruk.pz.util.PropertiesReader;
 
 import java.awt.*;
 import java.util.concurrent.Executors;
@@ -27,8 +28,8 @@ public class CurrencyRatesAnalyzer {
             ses.scheduleAtFixedRate(
                     new AnalyzeThread(trayIcon),
                     0,
-                    7,
-                    TimeUnit.SECONDS
+                    Integer.valueOf(PropertiesReader.getProperty("analyze.period", "3")),
+                    TimeUnit.valueOf(PropertiesReader.getProperty("analyze.period.time.unit", "HOURS"))
             );
         }
     }
