@@ -5,12 +5,19 @@ import pl.michalkruk.pz.gui.CurrencyRatesAnalyzerFrame;
 import pl.michalkruk.pz.gui.tray.action.AboutAction;
 import pl.michalkruk.pz.gui.tray.action.ExitAction;
 import pl.michalkruk.pz.gui.tray.action.TrayIconClick;
+import pl.michalkruk.pz.i18n.MessagesReader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon {
+public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon implements Observer{
 
+    private final String ABOUT_LABEL_MESSAGE_KEY = "About";
+    private final String EXIT_LABEL_MESSAGE_KEY = "Exit";
+    private MenuItem aboutItem;
+    private MenuItem exitItem;
     private PopupMenu popupMenu;
     private final SystemTray tray;
 
@@ -20,6 +27,7 @@ public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon {
         this.tray = tray;
         popupMenu = initializePopupMenu();
         setPopupMenu(popupMenu);
+        MessagesReader.getInstance().addObserver(this);
 
         try {
             tray.add(this);
@@ -30,8 +38,8 @@ public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon {
 
     private PopupMenu initializePopupMenu() {
         popupMenu = new PopupMenu();
-        MenuItem aboutItem = new MenuItem("About");
-        MenuItem exitItem = new MenuItem("Exit");
+        aboutItem = new MenuItem(MessagesReader.getInstance().getMessage(ABOUT_LABEL_MESSAGE_KEY));
+        exitItem = new MenuItem(MessagesReader.getInstance().getMessage(EXIT_LABEL_MESSAGE_KEY));
         popupMenu.add(aboutItem);
         popupMenu.addSeparator();
         popupMenu.add(exitItem);
@@ -40,5 +48,11 @@ public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon {
         exitItem.addActionListener(new ExitAction(this, tray));
 
         return popupMenu;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        aboutItem.setLabel(MessagesReader.getInstance().getMessage(ABOUT_LABEL_MESSAGE_KEY));
+        exitItem.setLabel(MessagesReader.getInstance().getMessage(EXIT_LABEL_MESSAGE_KEY));
     }
 }

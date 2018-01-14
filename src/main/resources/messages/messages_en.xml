@@ -23,4 +23,7 @@
     <entry key="SearchChartXLabel">Date</entry>
     <entry key="SearchChartYLabel">Value</entry>
     <entry key="DataLoadException">Couldn't download data</entry>
+    <entry key="About">About</entry>
+    <entry key="ApplicationAuthor">Author: Michał Kruk I5B4S1</entry>
+    <entry key="Exit">Exit</entry>
 </properties>

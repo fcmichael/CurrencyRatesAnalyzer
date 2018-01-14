@@ -23,4 +23,7 @@
     <entry key="SearchChartXLabel">Data</entry>
     <entry key="SearchChartYLabel">Wartość</entry>
     <entry key="DataLoadException">Błąd podczas pobierania danych</entry>
+    <entry key="About">O aplikacji</entry>
+    <entry key="ApplicationAuthor">Autor: Michał Kruk I5B4S1</entry>
+    <entry key="Exit">Zamknij</entry>
 </properties>
