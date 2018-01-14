@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon implements Observer{
+public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon implements Observer {
 
     private final String ABOUT_LABEL_MESSAGE_KEY = "About";
     private final String EXIT_LABEL_MESSAGE_KEY = "Exit";
@@ -48,6 +48,12 @@ public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon implements Observer{
         exitItem.addActionListener(new ExitAction(this, tray));
 
         return popupMenu;
+    }
+
+    public void displayMessage(String message) {
+        displayMessage(MessagesReader.getInstance().getMessage("CurrencyRatesAnalyzerFrameName"),
+                message,
+                TrayIcon.MessageType.INFO);
     }
 
     @Override

@@ -18,6 +18,5 @@ public class TrayIconClick extends MouseAdapter {
         if (!frame.isVisible()) {
             frame.setVisible(true);
         }
-//                trayIcon.displayMessage("TITLE", "MSG", TrayIcon.MessageType.INFO);
     }
 }

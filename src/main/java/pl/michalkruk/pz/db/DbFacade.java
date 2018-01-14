@@ -43,6 +43,14 @@ public class DbFacade {
                 .sorted(Comparator.comparing(Rate::getCode)).collect(Collectors.toList());
     }
 
+    public List<String> findFavouriteCurrencyCodes(){
+        entityManager.getTransaction().begin();
+        List<Rate> ratesList = entityManager.createQuery("Select r from Rate r where r.favourite = true", Rate.class).getResultList();
+        entityManager.getTransaction().commit();
+
+        return ratesList.stream().map(Rate::getCode).collect(Collectors.toList());
+    }
+
     public List<Rate> findAndUpdate() {
         List<Rate> rates = CurrentRatesProvider.getActualRates();
         persistRateList(rates);
