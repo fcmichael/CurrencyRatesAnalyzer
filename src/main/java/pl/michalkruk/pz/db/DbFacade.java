@@ -44,9 +44,10 @@ public class DbFacade {
     }
 
     public List<String> findFavouriteCurrencyCodes(){
-        entityManager.getTransaction().begin();
-        List<Rate> ratesList = entityManager.createQuery("Select r from Rate r where r.favourite = true", Rate.class).getResultList();
-        entityManager.getTransaction().commit();
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+        entityManager1.getTransaction().begin();
+        List<Rate> ratesList = entityManager1.createQuery("Select r from Rate r where r.favourite = true", Rate.class).getResultList();
+        entityManager1.getTransaction().commit();
 
         return ratesList.stream().map(Rate::getCode).collect(Collectors.toList());
     }
