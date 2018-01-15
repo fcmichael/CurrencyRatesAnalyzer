@@ -16,7 +16,7 @@ public class CurrencyRatesAnalyzer {
     public static void main(String[] args) {
         Logger.getRootLogger().info("Application start");
 
-        if (!SystemTray.isSupported()) {
+        if (SystemTray.isSupported()) {
             Logger.getRootLogger().warn("SystemTray is not supported");
             new CurrencyRatesAnalyzerFrame(false);
         } else {

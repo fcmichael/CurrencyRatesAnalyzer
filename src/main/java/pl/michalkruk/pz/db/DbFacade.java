@@ -43,7 +43,7 @@ public class DbFacade {
                 .sorted(Comparator.comparing(Rate::getCode)).collect(Collectors.toList());
     }
 
-    public List<String> findFavouriteCurrencyCodes(){
+    public List<String> findFavouriteCurrencyCodes() {
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         entityManager1.getTransaction().begin();
         List<Rate> ratesList = entityManager1.createQuery("Select r from Rate r where r.favourite = true", Rate.class).getResultList();
@@ -65,7 +65,20 @@ public class DbFacade {
             entityManager.getTransaction().begin();
             list.forEach(entityManager::merge);
             entityManager.getTransaction().commit();
+        } else {
+            list.forEach(rate -> {
+                Rate current = findByCode(rate.getCode());
+                current.setMid(rate.getMid());
+                current.setChange(rate.getChange());
+            });
         }
+    }
+
+    private Rate findByCode(String code) {
+        entityManager.getTransaction().begin();
+        Rate rate = entityManager.createQuery("Select r from Rate r where r.code = '" + code + "'", Rate.class).getSingleResult();
+        entityManager.getTransaction().commit();
+        return rate;
     }
 
 }

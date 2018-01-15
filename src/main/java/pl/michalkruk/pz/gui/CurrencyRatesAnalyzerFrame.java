@@ -19,6 +19,7 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer {
         this.systemTraySupported = systemTraySupported;
         prepareFrameSizeAndTitle();
         setResizable(false);
+        setLocationRelativeTo(null);
         setVisible(true);
         MessagesReader.getInstance().addObserver(this);
     }
@@ -41,8 +42,6 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer {
         });
         setSize(Integer.parseInt(PropertiesReader.getProperty("frame.size.width", "800")),
                 Integer.parseInt(PropertiesReader.getProperty("frame.size.height", "600")));
-        setLocation(Integer.parseInt(PropertiesReader.getProperty("frame.location.x", "0")),
-                Integer.parseInt(PropertiesReader.getProperty("frame.location.y", "0")));
         prepareMainPanel();
     }
 

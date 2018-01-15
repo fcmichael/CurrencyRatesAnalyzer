@@ -20,17 +20,19 @@ public class AnalyzeThread implements Runnable {
 
     @Override
     public void run() {
-        List<Rate> actualRates = CurrentRatesProvider.getActualRates();
         List<String> favouriteCurrencyCodes = DbFacade.getInstance().findFavouriteCurrencyCodes();
+        if (favouriteCurrencyCodes.size() > 0) {
+            List<Rate> actualRates = CurrentRatesProvider.getActualRates();
 
-        List<Rate> favouriteActualRates = actualRates.stream()
-                .filter(rate -> favouriteCurrencyCodes.contains(rate.getCode()))
-                .sorted(comparing(Rate::getChange, comparing(Math::abs)).reversed())
-                .limit(4)
-                .collect(Collectors.toList());
+            List<Rate> favouriteActualRates = actualRates.stream()
+                    .filter(rate -> favouriteCurrencyCodes.contains(rate.getCode()))
+                    .sorted(comparing(Rate::getChange, comparing(Math::abs)).reversed())
+                    .limit(4)
+                    .collect(Collectors.toList());
 
-        String message = prepareMessage(favouriteActualRates);
-        trayIcon.displayMessage(message);
+            String message = prepareMessage(favouriteActualRates);
+            trayIcon.displayMessage(message);
+        }
     }
 
     private String prepareMessage(List<Rate> rates) {
