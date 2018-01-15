@@ -17,14 +17,16 @@ public class PLAFSelectPanel extends JPanel implements Observer {
 
 	public PLAFSelectPanel() {
 		plafConfiguration = PLAFConfiguration.getInstance();
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-
-		this.jLabel.setMaximumSize(new Dimension(250, 400));
-		this.jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		setLayout(new GridLayout());
+        setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
+		jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JPanel labelPanel = new JPanel(new BorderLayout());
+        labelPanel.add(jLabel, BorderLayout.CENTER);
+        add(labelPanel);
 
 		List<PLAFRadioButton> PLAFRadioButtons = plafConfiguration.getLOOK_AND_FEEL_MAP().entrySet().stream()
 				.map(entry -> {
-					PLAFRadioButton button = new PLAFRadioButton(entry.getKey(), entry.getValue(), new Dimension(200, 40));
+					PLAFRadioButton button = new PLAFRadioButton(entry.getKey(), entry.getValue());
 					if(button.getLookAndFeel().equals(plafConfiguration.getCurrentLookAndFeel())){
 						button.setSelected(true);
 					}
@@ -35,9 +37,11 @@ public class PLAFSelectPanel extends JPanel implements Observer {
 		ButtonGroup group = new ButtonGroup();
 		PLAFRadioButtons.forEach(group::add);
 
-		add(jLabel);
-		add(Box.createRigidArea(new Dimension(200, 0)));
-		PLAFRadioButtons.forEach(this::add);
+		JPanel buttonPanel = new JPanel(new GridBagLayout());
+        JPanel buttonGroupPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 75, 0));
+		PLAFRadioButtons.forEach(buttonGroupPanel::add);
+		buttonPanel.add(buttonGroupPanel);
+		add(buttonPanel);
 		MessagesReader.getInstance().addObserver(this);
 	}
 

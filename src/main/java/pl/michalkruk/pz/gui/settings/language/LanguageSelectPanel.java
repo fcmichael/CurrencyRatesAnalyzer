@@ -11,16 +11,21 @@ public class LanguageSelectPanel extends JPanel implements Observer {
 
 	private final JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage("SettingsLanguage"));
 
-	public LanguageSelectPanel() {
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-		this.jLabel.setMaximumSize(new Dimension(250, 400));
-		this.jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    public LanguageSelectPanel() {
+        setLayout(new GridLayout());
+        setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
+        JPanel labelPanel = new JPanel(new BorderLayout());
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPanel.add(jLabel, BorderLayout.CENTER);
+        add(labelPanel);
 
-		add(jLabel);
-		add(Box.createRigidArea(new Dimension(328, 0)));
-		add(new LanguageComboBox());
-		MessagesReader.getInstance().addObserver(this);
-	}
+        JPanel comboBoxPanel = new JPanel(new GridBagLayout());
+        LanguageComboBox languageComboBox = new LanguageComboBox();
+        comboBoxPanel.add(languageComboBox);
+
+        add(comboBoxPanel);
+        MessagesReader.getInstance().addObserver(this);
+    }
 
 	@Override
 	public void update(Observable o, Object arg) {

@@ -18,7 +18,7 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer {
     public CurrencyRatesAnalyzerFrame(boolean systemTraySupported) {
         this.systemTraySupported = systemTraySupported;
         prepareFrameSizeAndTitle();
-        setResizable(false);
+        setResizable(true);
         setLocationRelativeTo(null);
         setVisible(true);
         MessagesReader.getInstance().addObserver(this);
