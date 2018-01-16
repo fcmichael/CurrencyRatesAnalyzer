@@ -13,6 +13,8 @@
     <entry key="Settings">Settings</entry>
     <entry key="SettingsLanguage">Language</entry>
     <entry key="SettingsPattern">Pattern</entry>
+    <entry key="SettingsNotificationFrequency">Notification frequency</entry>
+    <entry key="SettingsNotificationFrequencyMinutes">minutes</entry>
     <entry key="Search">Search</entry>
     <entry key="StartDate">From</entry>
     <entry key="EndDate">To</entry>

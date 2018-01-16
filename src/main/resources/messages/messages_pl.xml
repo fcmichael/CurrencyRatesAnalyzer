@@ -13,6 +13,8 @@
     <entry key="Settings">Ustawienia</entry>
     <entry key="SettingsLanguage">Język</entry>
     <entry key="SettingsPattern">Skórka</entry>
+    <entry key="SettingsNotificationFrequency">Częstość powiadomień</entry>
+    <entry key="SettingsNotificationFrequencyMinutes">minut</entry>
     <entry key="Search">Szukaj</entry>
     <entry key="StartDate">Od</entry>
     <entry key="EndDate">Do</entry>
