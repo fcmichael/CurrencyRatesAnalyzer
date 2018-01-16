@@ -9,7 +9,8 @@ import java.util.Observer;
 
 public class LanguageSelectPanel extends JPanel implements Observer {
 
-	private final JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage("SettingsLanguage"));
+    private final String SETTINGS_MESSAGE_KEY = "SettingsLanguage";
+	private final JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage(SETTINGS_MESSAGE_KEY));
 
     public LanguageSelectPanel() {
         setLayout(new GridLayout());
@@ -29,6 +30,6 @@ public class LanguageSelectPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.jLabel.setText(MessagesReader.getInstance().getMessage("SettingsLanguage"));
+		this.jLabel.setText(MessagesReader.getInstance().getMessage(SETTINGS_MESSAGE_KEY));
 	}
 }

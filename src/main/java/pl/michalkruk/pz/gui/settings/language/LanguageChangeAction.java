@@ -13,7 +13,9 @@ class LanguageChangeAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		LanguageComboBox languageComboBox = (LanguageComboBox) e.getSource();
 		ApplicationLanguage applicationLanguage = (ApplicationLanguage) languageComboBox.getSelectedItem();
-		Logger.getRootLogger().info("Language event - change to: " + applicationLanguage.getName());
-		MessagesReader.getInstance().changeLanguage(applicationLanguage);
+		if(applicationLanguage != null){
+            MessagesReader.getInstance().changeLanguage(applicationLanguage);
+            Logger.getRootLogger().info("Language event - change to: " + applicationLanguage.getName());
+        }
 	}
 }

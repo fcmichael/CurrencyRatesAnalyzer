@@ -19,6 +19,10 @@ import java.util.concurrent.ExecutionException;
 @Getter
 class DashboardTable extends JTable implements Observer {
 
+    private final String CURRENCY_CODE_MESSAGE_KEY = "CurrencyCode";
+    private final String CURRENCY_VALUE_MESSAGE_KEY = "CurrencyValue";
+    private final String CURRENCY_CHANGE_MESSAGE_KEY = "CurrencyChange";
+    private final String FAVOURITE_MESSAGE_KEY = "Favourite";
     private DashboardTableModel dashboardTableModel;
 
     DashboardTable() {
@@ -46,10 +50,11 @@ class DashboardTable extends JTable implements Observer {
 
     @Override
     public void update(java.util.Observable o, Object arg) {
-        getColumnModel().getColumn(0).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyCode"));
-        getColumnModel().getColumn(1).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyValue"));
-        getColumnModel().getColumn(2).setHeaderValue(MessagesReader.getInstance().getMessage("CurrencyChange"));
-        getColumnModel().getColumn(3).setHeaderValue(MessagesReader.getInstance().getMessage("Favourite"));
+        MessagesReader messagesReader = MessagesReader.getInstance();
+        getColumnModel().getColumn(0).setHeaderValue(messagesReader.getMessage(CURRENCY_CODE_MESSAGE_KEY));
+        getColumnModel().getColumn(1).setHeaderValue(messagesReader.getMessage(CURRENCY_VALUE_MESSAGE_KEY));
+        getColumnModel().getColumn(2).setHeaderValue(messagesReader.getMessage(CURRENCY_CHANGE_MESSAGE_KEY));
+        getColumnModel().getColumn(3).setHeaderValue(messagesReader.getMessage(FAVOURITE_MESSAGE_KEY));
     }
 
     @Override

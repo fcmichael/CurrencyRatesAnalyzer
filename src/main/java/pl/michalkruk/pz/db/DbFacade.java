@@ -16,12 +16,12 @@ public class DbFacade {
 
     private static final DbFacade instance = new DbFacade();
     private final EntityManagerFactory entityManagerFactory;
-    private final String CurrencyRatesAnalyzerPersistenceUnit = "CRA";
     private final EntityManager entityManager;
+    private final String currencyRatesAnalyzerPersistenceUnit = "CRA";
     private boolean resetDbAtStart;
 
     private DbFacade() {
-        this.entityManagerFactory = Persistence.createEntityManagerFactory(CurrencyRatesAnalyzerPersistenceUnit);
+        this.entityManagerFactory = Persistence.createEntityManagerFactory(currencyRatesAnalyzerPersistenceUnit);
         entityManager = entityManagerFactory.createEntityManager();
         resetDbAtStart = Boolean.parseBoolean(PropertiesReader.getProperty("database.reset", "false"));
         initNotificationFrequency();

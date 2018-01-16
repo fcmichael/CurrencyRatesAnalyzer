@@ -13,7 +13,8 @@ import java.util.Observer;
 
 public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer {
 
-    private boolean systemTraySupported;
+    private final String FRAME_NAME_MESSAGE_KEY = "CurrencyRatesAnalyzerFrameName";
+    private final boolean systemTraySupported;
 
     public CurrencyRatesAnalyzerFrame(boolean systemTraySupported) {
         this.systemTraySupported = systemTraySupported;
@@ -25,7 +26,7 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer {
     }
 
     private void prepareFrameSizeAndTitle() {
-        setTitle(MessagesReader.getInstance().getMessage("CurrencyRatesAnalyzerFrameName"));
+        setTitle(MessagesReader.getInstance().getMessage(FRAME_NAME_MESSAGE_KEY));
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -51,6 +52,6 @@ public class CurrencyRatesAnalyzerFrame extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        setTitle(MessagesReader.getInstance().getMessage("CurrencyRatesAnalyzerFrameName"));
+        setTitle(MessagesReader.getInstance().getMessage(FRAME_NAME_MESSAGE_KEY));
     }
 }

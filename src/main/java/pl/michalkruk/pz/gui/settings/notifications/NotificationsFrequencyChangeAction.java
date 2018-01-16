@@ -6,7 +6,7 @@ import pl.michalkruk.pz.db.DbFacade;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class NotificationsFrequencyChangeAction extends AbstractAction {
+class NotificationsFrequencyChangeAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {

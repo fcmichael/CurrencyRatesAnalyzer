@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 
 public class PLAFSelectPanel extends JPanel implements Observer {
 
-	private final JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage("SettingsPattern"));
+	private final String SETTINGS_PATTERN_MESSAGE_KEY = "SettingsPattern";
+	private final JLabel jLabel = new JLabel(MessagesReader.getInstance().getMessage(SETTINGS_PATTERN_MESSAGE_KEY));
 
 	private final PLAFConfiguration plafConfiguration;
 
@@ -47,6 +48,6 @@ public class PLAFSelectPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		jLabel.setText(MessagesReader.getInstance().getMessage("SettingsPattern"));
+		jLabel.setText(MessagesReader.getInstance().getMessage(SETTINGS_PATTERN_MESSAGE_KEY));
 	}
 }

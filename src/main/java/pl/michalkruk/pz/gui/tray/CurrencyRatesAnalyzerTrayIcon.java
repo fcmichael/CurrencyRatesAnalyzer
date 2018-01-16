@@ -14,6 +14,7 @@ import java.util.Observer;
 
 public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon implements Observer {
 
+    private final String FRAME_NAME_MESSAGE_KEY = "CurrencyRatesAnalyzerFrameName";
     private final String ABOUT_LABEL_MESSAGE_KEY = "About";
     private final String EXIT_LABEL_MESSAGE_KEY = "Exit";
     private MenuItem aboutItem;
@@ -51,7 +52,7 @@ public class CurrencyRatesAnalyzerTrayIcon extends TrayIcon implements Observer 
     }
 
     public void displayMessage(String message) {
-        displayMessage(MessagesReader.getInstance().getMessage("CurrencyRatesAnalyzerFrameName"),
+        displayMessage(MessagesReader.getInstance().getMessage(FRAME_NAME_MESSAGE_KEY),
                 message,
                 TrayIcon.MessageType.INFO);
     }

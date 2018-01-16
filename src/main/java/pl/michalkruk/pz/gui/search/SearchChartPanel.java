@@ -18,11 +18,14 @@ import java.util.List;
 
 class SearchChartPanel {
 
+	private static final String CHART_X_LABEL_MESSAGE_KEY = "SearchChartXLabel";
+    private static final String CHART_Y_LABEL_MESSAGE_KEY = "SearchChartYLabel";
+
 	static JFreeChart createChart(List<Rate> rateList, String title) {
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(
 				title,
-				MessagesReader.getInstance().getMessage("SearchChartXLabel"),
-				MessagesReader.getInstance().getMessage("SearchChartYLabel"),
+				MessagesReader.getInstance().getMessage(CHART_X_LABEL_MESSAGE_KEY),
+				MessagesReader.getInstance().getMessage(CHART_Y_LABEL_MESSAGE_KEY),
 				createDataset(rateList),
 				false,
 				false,

@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 
 public class ExitAction extends AbstractAction {
 
-    private CurrencyRatesAnalyzerTrayIcon trayIcon;
+    private final CurrencyRatesAnalyzerTrayIcon trayIcon;
     private final SystemTray tray;
 
     public ExitAction(CurrencyRatesAnalyzerTrayIcon trayIcon, SystemTray tray) {

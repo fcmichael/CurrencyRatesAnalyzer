@@ -3,7 +3,6 @@ package pl.michalkruk.pz.gui.settings.plaf;
 import lombok.Getter;
 
 import javax.swing.*;
-import java.awt.*;
 
 @Getter
 class PLAFRadioButton extends JRadioButton {

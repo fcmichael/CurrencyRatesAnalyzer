@@ -14,10 +14,10 @@ class DashboardTableModel extends AbstractTableModel {
 
     private List<Rate> rateList = new ArrayList<>();
     private String[] columnNames = {
-            MessagesReader.getInstance().getMessage("CurrencyCode"),
-            MessagesReader.getInstance().getMessage("CurrencyValue"),
-            MessagesReader.getInstance().getMessage("CurrencyChange"),
-            MessagesReader.getInstance().getMessage("Favourite")
+            "CurrencyCode",
+            "CurrencyValue",
+            "CurrencyChange",
+            "Favourite"
     };
 
     @Override
@@ -63,7 +63,7 @@ class DashboardTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int column) {
-        return columnNames[column];
+        return MessagesReader.getInstance().getMessage(columnNames[column]);
     }
 
     @Override

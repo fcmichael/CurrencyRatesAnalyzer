@@ -20,6 +20,8 @@ import java.util.concurrent.ExecutionException;
 @Getter
 public class SearchPanel extends BasicContentPanel implements Observer {
 
+    private final String CHART_X_LABEL_MESSAGE_KEY = "SearchChartXLabel";
+    private final String CHART_Y_LABEL_MESSAGE_KEY = "SearchChartYLabel";
     private final String CODE_LABEL_MESSAGE_KEY = "CurrencyCode";
     private final String START_DATE_LABEL_MESSAGE_KEY = "StartDate";
     private final String END_DATE_LABEL_MESSAGE_KEY = "EndDate";
@@ -181,8 +183,8 @@ public class SearchPanel extends BasicContentPanel implements Observer {
             Locale locale = messagesReader.getCurrentLanguage().getLocale();
             startDate.setLocale(locale);
             endDate.setLocale(locale);
-            chartPanel.getChart().getXYPlot().getDomainAxis().setLabel(MessagesReader.getInstance().getMessage("SearchChartXLabel"));
-            chartPanel.getChart().getXYPlot().getRangeAxis().setLabel(MessagesReader.getInstance().getMessage("SearchChartYLabel"));
+            chartPanel.getChart().getXYPlot().getDomainAxis().setLabel(messagesReader.getMessage(CHART_X_LABEL_MESSAGE_KEY));
+            chartPanel.getChart().getXYPlot().getRangeAxis().setLabel(messagesReader.getMessage(CHART_Y_LABEL_MESSAGE_KEY));
         }
     }
 }
