@@ -26,6 +26,7 @@ public class NotificationsFrequencySelectPanel extends JPanel implements Observe
 
         JPanel comboBoxPanel = new JPanel(new GridBagLayout());
         JComboBox<Integer> frequencyComboBox = new JComboBox<>(frequencyArray);
+        frequencyComboBox.addActionListener(new NotificationsFrequencyChangeAction());
         comboBoxPanel.add(frequencyComboBox);
         notificationFrequencyMinutesLabel = new JLabel("  " + MessagesReader.getInstance().getMessage(MINUTES_MESSAGE_KEY));
         comboBoxPanel.add(notificationFrequencyMinutesLabel);

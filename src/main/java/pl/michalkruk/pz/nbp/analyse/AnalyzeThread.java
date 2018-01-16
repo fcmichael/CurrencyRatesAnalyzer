@@ -1,5 +1,6 @@
 package pl.michalkruk.pz.nbp.analyse;
 
+import org.apache.log4j.Logger;
 import pl.michalkruk.pz.db.DbFacade;
 import pl.michalkruk.pz.gui.tray.CurrencyRatesAnalyzerTrayIcon;
 import pl.michalkruk.pz.nbp.model.Rate;
@@ -32,6 +33,7 @@ public class AnalyzeThread implements Runnable {
 
             String message = prepareMessage(favouriteActualRates);
             trayIcon.displayMessage(message);
+            Logger.getRootLogger().info("Analyze thread finished. Displayed message: " + message);
         }
     }
 
