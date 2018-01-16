@@ -1,39 +1,40 @@
 package pl.michalkruk.pz.nbp.notification;
 
+import pl.michalkruk.pz.db.DbFacade;
 import pl.michalkruk.pz.nbp.analyse.AnalyzeThread;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 
-public class NotificationExecutor implements Observer {
+public class NotificationExecutor {
 
-    private final ScheduledExecutorService ses;
-    private ScheduledFuture<?> notificationHandle;
-    private final AnalyzeThread analyzeThread;
+    private static ScheduledExecutorService ses;
+    private static ScheduledFuture<?> notificationHandle;
+    private static AnalyzeThread analyzeThread;
+    private static boolean analyzeStarted = false;
 
-    public NotificationExecutor(AnalyzeThread analyzeThread) {
-        NotificationFrequency.getInstance().addObserver(this);
+    public static void analyze(AnalyzeThread at) {
         ses = Executors.newSingleThreadScheduledExecutor();
-        this.analyzeThread = analyzeThread;
-        NotificationFrequency frequency = NotificationFrequency.getInstance();
+        NotificationFrequency frequency = DbFacade.getInstance().getNotificationFrequencyObject();
+        analyzeThread = at;
         notificationHandle = ses.scheduleAtFixedRate(
-                this.analyzeThread,
+                analyzeThread,
                 frequency.getInitialDelay(),
                 frequency.getFrequency(),
                 frequency.getTimeUnit());
+        analyzeStarted = true;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        notificationHandle.cancel(true);
-        NotificationFrequency frequency = (NotificationFrequency) o;
-        notificationHandle = ses.scheduleAtFixedRate(
-                this.analyzeThread,
-                frequency.getInitialDelay(),
-                frequency.getFrequency(),
-                frequency.getTimeUnit());
+    public static void update() {
+        if (analyzeStarted) {
+            NotificationFrequency frequency = DbFacade.getInstance().getNotificationFrequencyObject();
+            notificationHandle.cancel(true);
+            notificationHandle = ses.scheduleAtFixedRate(
+                    analyzeThread,
+                    frequency.getFrequency(),
+                    frequency.getFrequency(),
+                    frequency.getTimeUnit());
+        }
     }
 }

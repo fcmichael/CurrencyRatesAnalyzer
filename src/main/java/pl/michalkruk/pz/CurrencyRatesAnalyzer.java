@@ -20,7 +20,7 @@ public class CurrencyRatesAnalyzer {
             CurrencyRatesAnalyzerFrame frame = new CurrencyRatesAnalyzerFrame(true);
             SystemTray tray = SystemTray.getSystemTray();
             CurrencyRatesAnalyzerTrayIcon trayIcon = new CurrencyRatesAnalyzerTrayIcon(frame, tray);
-            new NotificationExecutor(new AnalyzeThread(trayIcon));
+            NotificationExecutor.analyze(new AnalyzeThread(trayIcon));
         }
     }
 }

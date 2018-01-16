@@ -1,25 +1,31 @@
 package pl.michalkruk.pz.nbp.notification;
 
 import lombok.Getter;
+import lombok.Setter;
+import pl.michalkruk.pz.util.PropertiesReader;
 
-import java.util.Observable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.concurrent.TimeUnit;
 
+@Entity
 @Getter
-public class NotificationFrequency extends Observable {
+public class NotificationFrequency{
 
-    private static final NotificationFrequency instance = new NotificationFrequency();
+    @Id
+    private Integer Id = -1;
+
     private int initialDelay = 0;
-    private int frequency = 3;
-    private TimeUnit timeUnit = TimeUnit.SECONDS;
 
-    public static NotificationFrequency getInstance(){
-        return instance;
+    @Setter
+    private int frequency;
+    private TimeUnit timeUnit = TimeUnit.MINUTES;
+
+    public NotificationFrequency() {
+        frequency = Integer.parseInt(PropertiesReader.getProperty("analyze.period.minutes", "360"));
     }
 
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
-        setChanged();
-        notifyObservers();
+    public void updated() {
+        NotificationExecutor.update();
     }
 }
