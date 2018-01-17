@@ -13,23 +13,14 @@ import java.util.Observer;
 public class DashboardPanel extends BasicContentPanel implements Observer {
 
 	private DashboardTable table;
-	private JLabel tableLabel;
-	private final String tableLabelMessageKey = "DashboardTableHeader";
 
 	public DashboardPanel() {
 		super("Dashboard", KeyEvent.VK_G);
-		setTableLabel();
 		setTable();
 		setContentPanel();
 
 		MessagesReader.getInstance().addObserver(this);
 		PLAFConfiguration.getInstance().addObserver(this);
-	}
-
-	private void setTableLabel() {
-		this.tableLabel = new JLabel(MessagesReader.getInstance().getMessage(tableLabelMessageKey));
-		this.tableLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		this.tableLabel.setPreferredSize(new Dimension(100, 50));
 	}
 
 	private void setTable() {
@@ -39,7 +30,7 @@ public class DashboardPanel extends BasicContentPanel implements Observer {
 
 	private void setContentPanel() {
 		JPanel contentPanel = new JPanel(new BorderLayout());
-		contentPanel.add(tableLabel, BorderLayout.NORTH);
+		contentPanel.add(new DashboardLabelPanel(), BorderLayout.NORTH);
 		contentPanel.add(new JScrollPane(table), BorderLayout.CENTER);
 		addContentPanel(contentPanel);
 	}
@@ -54,9 +45,6 @@ public class DashboardPanel extends BasicContentPanel implements Observer {
 		if (o instanceof PLAFConfiguration) {
 			this.table.setShowHorizontalLines(true);
 			this.table.setShowVerticalLines(true);
-		} else if (o instanceof MessagesReader) {
-			tableLabel.setText(MessagesReader.getInstance().getMessage(tableLabelMessageKey));
 		}
-
 	}
 }
