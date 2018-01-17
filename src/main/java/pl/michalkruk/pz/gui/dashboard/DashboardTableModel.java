@@ -1,13 +1,17 @@
 package pl.michalkruk.pz.gui.dashboard;
 
+import org.apache.log4j.Logger;
+import pl.michalkruk.pz.db.DbFacade;
 import pl.michalkruk.pz.i18n.MessagesReader;
 import pl.michalkruk.pz.nbp.model.Rate;
 import lombok.Getter;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Getter
 class DashboardTableModel extends AbstractTableModel {
@@ -51,8 +55,32 @@ class DashboardTableModel extends AbstractTableModel {
 
     public void setValueAt(Object value, int row, int col) {
         if (col == 3) {
-            rateList.get(row).setFavourite((Boolean) value);
-            fireTableCellUpdated(row, col);
+            final String code = rateList.get(row).getCode();
+            final Boolean favourite = (Boolean) value;
+
+            Logger.getRootLogger().info(code + " favourite property changed to: " + favourite);
+            SwingWorker swingWorker = new SwingWorker<List<Rate>, Object>() {
+
+                @Override
+                protected List<Rate> doInBackground() {
+                    DbFacade dbFacade = DbFacade.getInstance();
+                    dbFacade.updateFavouriteByCode(code, favourite);
+                    return dbFacade.findAll();
+                }
+
+                @Override
+                protected void done() {
+                    try {
+                        List<Rate> rateList = get();
+                        setRateList(rateList);
+                        fireTableDataChanged();
+                    } catch (InterruptedException | ExecutionException e) {
+                        Logger.getRootLogger().warn("Exception while updating favourite", e);
+                    }
+                }
+            };
+
+            swingWorker.execute();
         }
     }
 

@@ -45,7 +45,7 @@ public class DbFacade {
         }
     }
 
-    private List<Rate> findAll() {
+    public List<Rate> findAll() {
         entityManager.getTransaction().begin();
         List<Rate> ratesList = entityManager.createQuery("Select r from Rate r", Rate.class).getResultList();
         entityManager.getTransaction().commit();
@@ -92,6 +92,11 @@ public class DbFacade {
         return rate;
     }
 
+    public void updateFavouriteByCode(String code, Boolean value) {
+        Rate rate = findByCode(code);
+        rate.setFavourite(value);
+    }
+
     public int getNotificationFrequency() {
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         entityManager1.getTransaction().begin();
@@ -124,5 +129,4 @@ public class DbFacade {
         entityManager1.getTransaction().commit();
         return frequency;
     }
-
 }
