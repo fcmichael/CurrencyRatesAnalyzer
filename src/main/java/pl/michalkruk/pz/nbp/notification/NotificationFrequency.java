@@ -5,6 +5,8 @@ import lombok.Setter;
 import pl.michalkruk.pz.util.PropertiesReader;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +21,8 @@ public class NotificationFrequency{
 
     @Setter
     private int frequency;
+
+    @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit = TimeUnit.MINUTES;
 
     public NotificationFrequency() {
